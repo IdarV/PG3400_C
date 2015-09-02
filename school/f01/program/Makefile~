@@ -1,0 +1,6 @@
+CFLAGS=-Wall -g
+
+all: program.c
+	gcc -g -Wall -o program program.c
+clean:
+	rm -f program
