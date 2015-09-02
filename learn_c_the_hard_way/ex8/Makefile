@@ -1,7 +1,8 @@
 CFLAGS= -std='c11' -Wall -g 
+CC = gcc
 
-all:
-	gcc $(CFLAGS) -o program program.c
+all: program
+	#gcc $(CFLAGS) -o program program.c
 	./program
 	
 clean:
