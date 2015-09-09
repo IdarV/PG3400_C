@@ -5,6 +5,9 @@
 # Linux backup files
 *~
 
+### THINGS I DONT WANNA PUSH ###
+CMakeLists.txt
+
 ### C ###
 # Object files
 *.o
