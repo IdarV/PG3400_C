@@ -1,33 +1,46 @@
 #include <stdio.h>
-#include <ctype.h>
+#include <strings.h>
+#include <string.h>
 
-// forward declarations
-int can_print_it(char ch);
-void print_letters(char arg[]);
+int main(int argc, char *argv[]) {
+    // Create two arrays that we care about
+    int ages[] = {23, 43, 12, 89, 2};
 
-void print_arguments(int argc, char *argv[]){
-    for(int i = 1; i < argc; i++) {
-        print_letters(argv[i]);
+    char *names[] = {"Kim", "Idar", "Fredrick", "Tomas", "Hello Kitty"};
+
+    // safely get the size of ages
+    int count = sizeof(ages) / sizeof(ages[0]);
+
+    // first way using indexing
+    for (int i = 0; i < count; i++) {
+        printf("%s har %d years alive.\n", names[i], ages[i]);
     }
-}
 
-void print_letters(char arg[]){
-    for(int i = 0; arg[i] != '\0'; i++){
-        char ch = arg[i];
+    printf("-------\n");
 
-        if(can_print_it(ch)){
-            printf("'%c' == %d\n", ch, ch);
-        }
+    // setup the pointers to the start of the arrays
+    int *cur_age = ages;
+    char **cur_name = names;
+
+    // second way using pointers
+    for (int i = 0; i < count; i++) {
+        printf("%s is %d years old\n", *(cur_name + i), *(cur_age + i));
     }
-    printf("\n");
-}
 
-int can_print_it(char ch) {
-    return isalpha(ch) || isblank(ch);
-}
+    printf("-------\n");
 
-int main(int argc, char *argv[]){
-    print_arguments(argc, argv);
+    // third way, pointers are just arrays
+    for (int i = 0; i < count; i++) {
+        printf("%s is %d years old again.\n", cur_name[i], cur_age[i]);
+    }
+
+    printf("-------\n");
+
+    // fourth way with pointers in a stupid complex way
+    for (cur_name = names, cur_age = ages; (cur_age - ages) < count; cur_name++, cur_age++) {
+        printf("%s lived %d years so far.\n", *cur_name, *cur_age);
+    }
+
     return 0;
 }
 
