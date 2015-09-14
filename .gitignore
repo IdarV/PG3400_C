@@ -5,6 +5,9 @@
 # Linux backup files
 *~
 
+### Database ###
+*.dat
+
 ### THINGS I DONT WANNA PUSH ###
 CMakeLists.txt
 
