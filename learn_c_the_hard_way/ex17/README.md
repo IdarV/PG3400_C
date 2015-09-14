@@ -1,5 +1,26 @@
 # Ex17
 
+### Changed
+structs have been changed from
+```
+struct MyStruct{
+	int someint;
+};
+
+struct MyStruct mystruct = {.someint = 1}
+```
+to
+```
+typedef struct{
+    int someint;
+} MyStruct;
+
+MyStruct mystruct = {.someint = 1};
+```
+
+to avoid repeating the ```struct``` defining every time a struct is used.
+
+
 ### Run it
 
 Make:
@@ -12,7 +33,7 @@ Create database( c ):
 ```
 Insert data ( s ):
 ```sh
-./program db.dat s 1 zed zed@zedshaw.com
+./program db.dat s 1 idarv idarv@something.com
 ```
 Delete data ( d ):
 ```sh
