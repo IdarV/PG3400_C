@@ -1,4 +1,4 @@
-CFLAGS=-Wall -g -std='c11'
+CFLAGS=-Wall -g -std='gnu11'
 
 all: ex19
 

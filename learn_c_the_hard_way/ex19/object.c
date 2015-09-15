@@ -47,7 +47,7 @@ void *Object_new(size_t size, Object proto, char *description) {
     *el = proto;
 
     // copy the description over
-    #ifdef description
+    #ifndef description
         el->description = strdup(description);
     #endif
 
