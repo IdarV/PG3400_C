@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "helpers/bubblesort.c"
 #include "helpers/filehandler.c"
+#include "helpers/binary_search.c"
 
 void print_array(int numbers_length, int *numbers) {
     for (int i = 0; i < numbers_length; i++) {
@@ -19,6 +20,7 @@ int main(int argc, char *argv[]) {
     open_file(filename);
     int count = get_file_integer_count();
 
+
     // create array with size of contents, set break as last
     int int_array[count];
     ints_to_array(int_array);
@@ -26,7 +28,11 @@ int main(int argc, char *argv[]) {
     bubble_sort(count, int_array);
     print_array(count, int_array);
 
-    printf("file integer count is %d\n", count);
+    if(argc == 3){
+        int wanted_nr = atoi(argv[2]);
+        int index = binary_search(count,int_array, wanted_nr);
+        printf("index of %d is %d\n", wanted_nr, index);
+    }
 
     fclose(file);
 
