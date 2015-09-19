@@ -1,4 +1,5 @@
 #include <string.h>
+#include <sys/time.h>
 #include "helpers/bubblesort.c"
 #include "helpers/mergesort.c"
 #include "helpers/filehandler.c"
@@ -38,19 +39,29 @@ int main(int argc, char *argv[]) {
     int original_array[int_array_size];
     memcpy(original_array, int_array, sizeof(int_array));
 
+    // setup time
+    struct timeval stop, start;
+
     char *sorting_method = argv[2];
 
     // sort based on input
     if (strcmp(sorting_method, "bubble") == 0) {
+        gettimeofday(&start, NULL);
         bubble_sort(int_array_size, int_array);
+        gettimeofday(&stop, NULL);
+
         printf("Using sorting method bubble_sort\n");
     } else if (strcmp(sorting_method, "merge") == 0) {
+        gettimeofday(&start, NULL);
         merge_sort(int_array_size, int_array);
+        gettimeofday(&stop, NULL);
+
         printf("Using sorting method merge_sort\n");
     } else {
         die("Didnt find any sorting argument. \nSorting methods: \"merge\", \"bubble\"\nUsage: \"./program [file] [sorting_method] [opt: number_to_search_for]\"");
     }
     print_array(int_array_size, int_array);
+    printf("sorting took %.3f ms.\n", (float)(stop.tv_usec - start.tv_usec) / 1000);
 
     if (argc == 4) {
         // parse second arg to int, and try to get the index of it
