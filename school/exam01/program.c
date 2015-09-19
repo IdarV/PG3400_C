@@ -1,5 +1,6 @@
 #include <string.h>
 #include "helpers/bubblesort.c"
+#include "helpers/mergesort.c"
 #include "helpers/filehandler.c"
 #include "helpers/binary_search.c"
 
@@ -22,7 +23,7 @@ int find_old_index(int array_length, int *array, int number) {
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         // kill program if no file is
-        die("Didn't find any file argument. \nUsage: \"./program [file] [alt: number_to_search_for]\"\n");
+        die("Didn't find any file argument. \nUsage: \"./program [file] [sorting_method] [opt: number_to_search_for]\"\n");
     }
 
     // open the file, and count the integers
@@ -37,14 +38,23 @@ int main(int argc, char *argv[]) {
     int original_array[int_array_size];
     memcpy(original_array, int_array, sizeof(int_array));
 
-    // bubble-sort and print
-    bubble_sort(int_array_size, int_array);
+    char *sorting_method = argv[2];
+
+    // sort based on input
+    if (strcmp(sorting_method, "bubble") == 0) {
+        bubble_sort(int_array_size, int_array);
+        printf("Using sorting method bubble_sort\n");
+    } else if (strcmp(sorting_method, "merge") == 0) {
+        merge_sort(int_array_size, int_array);
+        printf("Using sorting method merge_sort\n");
+    } else {
+        die("Didnt find any sorting argument. \nSorting methods: \"merge\", \"bubble\"\nUsage: \"./program [file] [sorting_method] [opt: number_to_search_for]\"");
+    }
     print_array(int_array_size, int_array);
 
-    if (argc == 3) {
-        // parse second arg to int
-        int wanted_nr = atoi(argv[2]);
-        // get index in sorted array
+    if (argc == 4) {
+        // parse second arg to int, and try to get the index of it
+        int wanted_nr = atoi(argv[3]);
         int index = binary_search(int_array_size, int_array, wanted_nr);
 
         // print results

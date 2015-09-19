@@ -1,3 +1,18 @@
+# Program
+## Usage
+#### Arguments
+- opt = optional
+- sorting_methods are: ```merge```, ```bubble```
+- files in this repo is: ```1.txt```, ```2.txt```, ```3.txt```, ```4.txt```
+```sh
+$ ./program [file_to_search] [sorting_method] [opt: integer_to_search_for]
+```
+#### Run example
+```sh
+$ make
+$ ./program 3.txt merge 5322
+```
+# Exam task
 ## 1 Instructions
 
 You are encouraged to discuss about the problem and possible solutions, but your code is expected to be independent.
