@@ -2,10 +2,10 @@
 ## Usage
 #### Arguments
 - opt = optional
-- sorting_methods are: ```merge```, ```bubble```
+- sorting_methods (default merge): ```merge```, ```bubble```
 - files in this repo is: ```1.txt```, ```2.txt```, ```3.txt```, ```4.txt```
 ```sh
-$ ./program [file_to_search] [sorting_method] [opt: integer_to_search_for]
+$ ./program [file_to_search] [opt: sorting_method] [opt: integer_to_search_for]
 ```
 #### Run example
 ```sh
