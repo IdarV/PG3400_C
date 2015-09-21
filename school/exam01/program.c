@@ -17,7 +17,6 @@ void print_array(int numbers_length, int *numbers) {
     for (int i = 0; i < numbers_length; i++) {
         printf("%d\n", numbers[i]);
     }
-    printf("\n");
 }
 
 int find_old_index(int array_length, int *array, int number) {
@@ -30,7 +29,6 @@ int find_old_index(int array_length, int *array, int number) {
 }
 
 void sort_array(char *sorting_method, int array_size, int *array) {
-
     if (strcmp(sorting_method, "bubble") == 0) {
 
         bubble_sort(array_size, array);
@@ -40,14 +38,33 @@ void sort_array(char *sorting_method, int array_size, int *array) {
         die("Didnt find any sorting argument. \nSorting methods: \"merge\", \"bubble\"\n"
                     "Usage: \"./program [file] [opt: sorting_method] [opt: number_to_search_for]\"");
     }
-
 }
 
-char * set_sort_method(int argc, char* argv[]){
-    if(argc > 2){
+char *set_sort_method(int argc, char *argv[]) {
+    if (argc > 2) {
         return argv[2];
-    } else{
+    } else {
         return "merge\0";
+    }
+}
+
+void search_number_interaction(int int_array_size, int *int_array, int *original_array, char *filename) {
+    int search_number;
+    printf("Number to search for (0 to skip): ");
+    scanf("%d", &search_number);
+
+    // do search if fourth argument exists
+    if (search_number != 0) {
+        // parse second arg to int, and try to get the index of it
+        int index = binary_search(int_array_size, int_array, search_number);
+
+        // print results
+        if (index == -1) {
+            printf("%d is not present in  %s\n", search_number, filename);
+        } else {
+            int original_index = find_old_index(int_array_size, original_array, search_number);
+            printf("index of %d in sorted array is %d (used to be index %d)\n", search_number, index, original_index);
+        }
     }
 }
 
@@ -55,7 +72,7 @@ int main(int argc, char *argv[]) {
     if (argc < 2) {
         // kill program if no file is
         die("Didn't find any file argument. \n"
-                    "Usage: \"./program [file] [opt: sorting_method] [opt: number_to_search_for]\"\n");
+                    "Usage: \"./program [file] [opt: sorting_method]\"\n");
     }
 
     // open the file, and count the integers
@@ -82,22 +99,9 @@ int main(int argc, char *argv[]) {
 
     // print sorted array and execution time
     print_array(int_array_size, int_array);
-    printf("sorting took %ld ms.\n", (timestop - timestart));
+    printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
 
-    // do search if fourth argument exists
-    if (argc == 4) {
-        // parse second arg to int, and try to get the index of it
-        int wanted_nr = atoi(argv[3]);
-        int index = binary_search(int_array_size, int_array, wanted_nr);
-
-        // print results
-        if (index == -1) {
-            printf("%d is not present in  %s\n", wanted_nr, argv[1]);
-        } else {
-            int original_index = find_old_index(int_array_size, original_array, wanted_nr);
-            printf("index of %d in sorted array is %d (used to be index %d)\n", wanted_nr, index, original_index);
-        }
-    }
+    search_number_interaction(int_array_size, int_array, original_array, argv[1]);
     fclose(file);
 
     return 0;

@@ -47,11 +47,18 @@ void merge_sort(int numbers_length, int *numbers) {
         free(firstHalf);
         free(secondHalf);
     } else if (numbers_length == 2) {
+        /**
+         * This saves about 11% run-time (in my VM).
+         * Since the recursive arrays of size 1 are ignored, the ones of size 2 are the most
+         * occurring ones. Because of their size, they are much faster to sort by reference
+         * and comparison, rather than sending them through another iteration of merge-sort.
+         * I could've optimized this further, and maybe ran a bubble-sort through the smaller
+         * sizes, but I decided to keep it simple.
+         */
         if (numbers[0] > numbers[1]) {
             int temp = numbers[0];
             numbers[0] = numbers[1];
             numbers[1] = temp;
         }
     }
-
 }

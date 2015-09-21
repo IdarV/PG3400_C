@@ -1,3 +1,4 @@
+// Standard bubble-sort with smallest-first-implementation
 void bubble_sort(int numbers_length, int *numbers) {
     for (int j = 0; j < numbers_length; j++) {
         for (int i = numbers_length - 1; i >= j + 1; i--) {

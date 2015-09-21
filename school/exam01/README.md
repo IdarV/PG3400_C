@@ -5,12 +5,13 @@
 - sorting_methods (default merge): ```merge```, ```bubble```
 - files in this repo is: ```1.txt```, ```2.txt```, ```3.txt```, ```4.txt```
 ```sh
-$ ./program [file_to_search] [opt: sorting_method] [opt: integer_to_search_for]
+$ ./program [file_to_search] [opt: sorting_method]
 ```
 #### Run example
 ```sh
 $ make
-$ ./program 3.txt merge 5322
+$ ./program 3.txt bubble
+$ ./program 4.txt
 ```
 # Exam task
 ## 1 Instructions
