@@ -10,14 +10,7 @@ void merge_sort(int numbers_length, int *numbers) {
         int second_half_size = (numbers_length - first_half_size);
 
         int *firstHalf = malloc(first_half_size * sizeof(int));
-//    if (!firstHalf) {
-//        /* handle error */
-//    }
-
         int *secondHalf = malloc(second_half_size * sizeof(int));
-//    if (!secondHalf) {
-//        /* handle error */
-//    }
 
         memcpy(firstHalf, numbers, first_half_size * sizeof(int));
         memcpy(secondHalf, numbers + first_half_size, second_half_size * sizeof(int));
@@ -50,6 +43,9 @@ void merge_sort(int numbers_length, int *numbers) {
             second_index++;
             overall_index++;
         }
+
+        free(firstHalf);
+        free(secondHalf);
     } else if (numbers_length == 2) {
         if (numbers[0] > numbers[1]) {
             int temp = numbers[0];
@@ -57,4 +53,5 @@ void merge_sort(int numbers_length, int *numbers) {
             numbers[1] = temp;
         }
     }
+
 }

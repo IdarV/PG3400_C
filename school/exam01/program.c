@@ -1,9 +1,19 @@
 #include <string.h>
 #include <sys/time.h>
-#include "helpers/bubblesort.c"
-#include "helpers/mergesort.c"
+#include <time.h>
+#include <tgmath.h>
+#include "sorters/bubblesort.c"
+#include "sorters/mergesort.c"
 #include "helpers/filehandler.c"
-#include "helpers/binary_search.c"
+#include "searchers/binary_search.c"
+
+long long current_timestamp() {
+    struct timeval te;
+    gettimeofday(&te, NULL); // get current time
+    long long milliseconds = te.tv_sec * 1000LL + te.tv_usec / 1000; // caculate milliseconds
+    // printf("milliseconds: %lld\n", milliseconds);
+    return milliseconds;
+}
 
 void print_array(int numbers_length, int *numbers) {
     for (int i = 0; i < numbers_length; i++) {
@@ -39,29 +49,22 @@ int main(int argc, char *argv[]) {
     int original_array[int_array_size];
     memcpy(original_array, int_array, sizeof(int_array));
 
-    // setup time
-    struct timeval stop, start;
-
     char *sorting_method = argv[2];
+    long timestart = 0;
 
     // sort based on input
+    timestart = current_timestamp();
     if (strcmp(sorting_method, "bubble") == 0) {
-        gettimeofday(&start, NULL);
+
         bubble_sort(int_array_size, int_array);
-        gettimeofday(&stop, NULL);
-
-        printf("Using sorting method bubble_sort\n");
     } else if (strcmp(sorting_method, "merge") == 0) {
-        gettimeofday(&start, NULL);
         merge_sort(int_array_size, int_array);
-        gettimeofday(&stop, NULL);
-
-        printf("Using sorting method merge_sort\n");
     } else {
         die("Didnt find any sorting argument. \nSorting methods: \"merge\", \"bubble\"\nUsage: \"./program [file] [sorting_method] [opt: number_to_search_for]\"");
     }
+    long timestop = current_timestamp();
     print_array(int_array_size, int_array);
-    printf("sorting took %.3f ms.\n", (float)(stop.tv_usec - start.tv_usec) / 1000);
+    printf("sorting took %ld ms.\n", (timestop - timestart));
 
     if (argc == 4) {
         // parse second arg to int, and try to get the index of it
