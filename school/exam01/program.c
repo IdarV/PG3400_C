@@ -63,6 +63,9 @@ void search_number_interaction(int int_array_size, int *int_array, int *original
         if (index == -1) {
             printf("%d is not present in  %s\n", search_number, filename);
         } else {
+            for(int i = 0; i < int_array_size; i++){
+                printf("OLD: %d\n", original_array[i]);
+            }
             int original_index = find_old_index(int_array_size, original_array, search_number);
             printf("index of %d in sorted array is %d (used to be index %d)\n", search_number, index, original_index);
         }
@@ -83,38 +86,26 @@ int main(int argc, char *argv[]) {
 
     Dynarray numbers;
     Dynarray_init(&numbers);
-    Dynarray_append(&numbers, 4321);
-    // create array with content from files
-    //int int_array[int_array_size];
     ints_to_array(&numbers);
-    printf("Dynarray.size: %d\n", numbers.size);
+
+    char *sorting_method = set_sort_method(argc, argv);
+
+    // sort array and record execution time
+    long timestart = 0;
+    timestart = current_timestamp();
+
+    sort_array(sorting_method, numbers.size, numbers.data);
+
+    long timestop = current_timestamp();
+
+    // print sorted array and execution time
     Dynarray_print(&numbers);
-    for(int i = 0; i < numbers.size; i++){
-        printf("%d\n", numbers.data[i]);
-    }
+    printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
 
-    Dynarray_free(&numbers);
-
-//    // copy the newly created array to 'original_array'
-//    int original_array[int_array_size];
-//    memcpy(original_array, int_array, sizeof(int_array));
-//
-//    char *sorting_method = set_sort_method(argc, argv);
-//
-//    // sort array and record execution time
-//    long timestart = 0;
-//    timestart = current_timestamp();
-//
-//    sort_array(sorting_method, int_array_size, int_array);
-//
-//    long timestop = current_timestamp();
-//
-//    // print sorted array and execution time
-//    print_array(int_array_size, int_array);
-//    printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
-//
-//    search_number_interaction(int_array_size, int_array, original_array, argv[1]);
+    // TODO: FIX THIS
+    search_number_interaction(numbers.size, numbers.data, numbers.original_data, argv[1]);
     fclose(file);
+    Dynarray_free(&numbers);
 
     return 0;
 }

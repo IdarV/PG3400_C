@@ -38,7 +38,7 @@ void Dynarray_double_capacity_if_full(Dynarray *dynarray){
 }
 
 void Dynarray_copy_to_original_data(Dynarray *dynarray){
-    dynarray->original_data = realloc(dynarray->original_data, sizeof(dynarray->data));
+    //dynarray->original_data = realloc(dynarray->original_data, sizeof(dynarray->data));
     memcpy(dynarray->original_data, dynarray->data, sizeof(&dynarray->data));
 }
 
