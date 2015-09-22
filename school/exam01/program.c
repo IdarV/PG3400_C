@@ -1,9 +1,10 @@
 #include <string.h>
 #include <sys/time.h>
+#include "helpers/Dynarray/dynarray.c"
 #include "sorters/bubblesort.c"
 #include "sorters/mergesort.c"
-#include "helpers/filehandler.c"
 #include "searchers/binary_search.c"
+#include "helpers/filehandler.c"
 
 // CREDS: http://stackoverflow.com/questions/3756323/getting-the-current-time-in-milliseconds
 long long current_timestamp() {
@@ -68,6 +69,7 @@ void search_number_interaction(int int_array_size, int *int_array, int *original
     }
 }
 
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         // kill program if no file is
@@ -77,31 +79,41 @@ int main(int argc, char *argv[]) {
 
     // open the file, and count the integers
     open_file(argv[1]);
-    int int_array_size = get_file_integer_count();
+    //int int_array_size = get_file_integer_count();
 
+    Dynarray numbers;
+    Dynarray_init(&numbers);
+    Dynarray_append(&numbers, 4321);
     // create array with content from files
-    int int_array[int_array_size];
-    ints_to_array(int_array);
+    //int int_array[int_array_size];
+    ints_to_array(&numbers);
+    printf("Dynarray.size: %d\n", numbers.size);
+    Dynarray_print(&numbers);
+    for(int i = 0; i < numbers.size; i++){
+        printf("%d\n", numbers.data[i]);
+    }
 
-    // copy the newly created array to 'original_array'
-    int original_array[int_array_size];
-    memcpy(original_array, int_array, sizeof(int_array));
+    Dynarray_free(&numbers);
 
-    char *sorting_method = set_sort_method(argc, argv);
-
-    // sort array and record execution time
-    long timestart = 0;
-    timestart = current_timestamp();
-
-    sort_array(sorting_method, int_array_size, int_array);
-
-    long timestop = current_timestamp();
-
-    // print sorted array and execution time
-    print_array(int_array_size, int_array);
-    printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
-
-    search_number_interaction(int_array_size, int_array, original_array, argv[1]);
+//    // copy the newly created array to 'original_array'
+//    int original_array[int_array_size];
+//    memcpy(original_array, int_array, sizeof(int_array));
+//
+//    char *sorting_method = set_sort_method(argc, argv);
+//
+//    // sort array and record execution time
+//    long timestart = 0;
+//    timestart = current_timestamp();
+//
+//    sort_array(sorting_method, int_array_size, int_array);
+//
+//    long timestop = current_timestamp();
+//
+//    // print sorted array and execution time
+//    print_array(int_array_size, int_array);
+//    printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
+//
+//    search_number_interaction(int_array_size, int_array, original_array, argv[1]);
     fclose(file);
 
     return 0;

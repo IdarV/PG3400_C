@@ -39,13 +39,13 @@ int get_file_integer_count() {
 /**
  * adds integers from file to array. Array should be preset to have fixed size for this
  */
-void ints_to_array(int *array) {
-    int i = 0, c = 0;
+void ints_to_array(Dynarray *dynarray) {
+    int i = 0;
     while (!feof(file)) {
         fscanf(file, "%d", &i);
-        array[c] = i;
-        c++;
+        Dynarray_append(dynarray, i);
     }
+    Dynarray_copy_to_original_data(dynarray);
 
     rewind(file);
 }
