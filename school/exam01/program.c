@@ -1,3 +1,6 @@
+#include "helpers/FileElement/FileElement.h"
+#include "helpers/Dynarray/dynarray.h"
+
 #include <string.h>
 #include <sys/time.h>
 #include "helpers/Dynarray/dynarray.c"
@@ -14,22 +17,22 @@ long long current_timestamp() {
     return milliseconds;
 }
 
-void print_array(int numbers_length, int *numbers) {
-    for (int i = 0; i < numbers_length; i++) {
-        printf("%d\n", numbers[i]);
-    }
-}
+//void print_array(int numbers_length, int *numbers) {
+//    for (int i = 0; i < numbers_length; i++) {
+//        printf("%d\n", numbers[i]);
+//    }
+//}
+//
+//int find_old_index(int array_length, int *array, int number) {
+//    for (int i = 0; i < array_length; i++) {
+//        if (array[i] == number) {
+//            return i;
+//        }
+//    }
+//    return -1;
+//}
 
-int find_old_index(int array_length, int *array, int number) {
-    for (int i = 0; i < array_length; i++) {
-        if (array[i] == number) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-void sort_array(char *sorting_method, int array_size, int *array) {
+void sort_array(char *sorting_method, int array_size, FileElement *array) {
     if (strcmp(sorting_method, "bubble") == 0) {
 
         bubble_sort(array_size, array);
@@ -49,7 +52,7 @@ char *set_sort_method(int argc, char *argv[]) {
     }
 }
 
-void search_number_interaction(int int_array_size, int *int_array, int *original_array, char *filename) {
+void search_number_interaction(int int_array_size, FileElement *array, char *filename) {
     int search_number;
     printf("Number to search for (0 to skip): ");
     scanf("%d", &search_number);
@@ -57,17 +60,13 @@ void search_number_interaction(int int_array_size, int *int_array, int *original
     // do search if fourth argument exists
     if (search_number != 0) {
         // parse second arg to int, and try to get the index of it
-        int index = binary_search(int_array_size, int_array, search_number);
+        int index = binary_search(int_array_size, array, search_number);
 
         // print results
         if (index == -1) {
             printf("%d is not present in  %s\n", search_number, filename);
         } else {
-            for(int i = 0; i < int_array_size; i++){
-                printf("OLD: %d\n", original_array[i]);
-            }
-            int original_index = find_old_index(int_array_size, original_array, search_number);
-            printf("index of %d in sorted array is %d (used to be index %d)\n", search_number, index, original_index);
+            printf("index of %d in the sorted array is %d (used to be index %d)\n", search_number, index, array[index].original_index);
         }
     }
 }
@@ -82,7 +81,6 @@ int main(int argc, char *argv[]) {
 
     // open the file, and count the integers
     open_file(argv[1]);
-    //int int_array_size = get_file_integer_count();
 
     Dynarray numbers;
     Dynarray_init(&numbers);
@@ -99,11 +97,10 @@ int main(int argc, char *argv[]) {
     long timestop = current_timestamp();
 
     // print sorted array and execution time
-    Dynarray_print(&numbers);
+    Dynarray_print_with_index(&numbers);
     printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
 
-    // TODO: FIX THIS
-    search_number_interaction(numbers.size, numbers.data, numbers.original_data, argv[1]);
+    search_number_interaction(numbers.size, numbers.data, argv[1]);
     fclose(file);
     Dynarray_free(&numbers);
 

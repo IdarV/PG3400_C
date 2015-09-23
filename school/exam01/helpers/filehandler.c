@@ -41,11 +41,12 @@ int get_file_integer_count() {
  */
 void ints_to_array(Dynarray *dynarray) {
     int i = 0;
+    int index = 0;
     while (!feof(file)) {
         fscanf(file, "%d", &i);
-        Dynarray_append(dynarray, i);
+        Dynarray_append_with_index(dynarray, i, index++);
     }
-    Dynarray_copy_to_original_data(dynarray);
+   // Dynarray_copy_to_original_data(dynarray);
 
     rewind(file);
 }

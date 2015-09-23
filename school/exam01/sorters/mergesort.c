@@ -3,17 +3,17 @@
 #include <string.h>
 
 // inspired by http://www.sorting-algorithms.com/merge-sort
-void merge_sort(int numbers_length, int *numbers) {
+void merge_sort(int numbers_length, FileElement *numbers) {
     if (numbers_length > 2) {
 
         int first_half_size = numbers_length / 2;
         int second_half_size = (numbers_length - first_half_size);
 
-        int *firstHalf = malloc(first_half_size * sizeof(int));
-        int *secondHalf = malloc(second_half_size * sizeof(int));
+        FileElement *firstHalf = malloc(first_half_size * sizeof(FileElement));
+        FileElement *secondHalf = malloc(second_half_size * sizeof(FileElement));
 
-        memcpy(firstHalf, numbers, first_half_size * sizeof(int));
-        memcpy(secondHalf, numbers + first_half_size, second_half_size * sizeof(int));
+        memcpy(firstHalf, numbers, first_half_size * sizeof(FileElement));
+        memcpy(secondHalf, numbers + first_half_size, second_half_size * sizeof(FileElement));
         merge_sort(first_half_size, firstHalf);
         merge_sort(second_half_size, secondHalf);
 
@@ -23,7 +23,7 @@ void merge_sort(int numbers_length, int *numbers) {
 
         // go through all
         while ((first_index < first_half_size) && (second_index < second_half_size)) {
-            if (firstHalf[first_index] <= secondHalf[second_index]) {
+            if (firstHalf[first_index].value <= secondHalf[second_index].value) {
                 numbers[overall_index] = firstHalf[first_index];
                 first_index++;
             } else {
@@ -55,8 +55,8 @@ void merge_sort(int numbers_length, int *numbers) {
          * I could've optimized this further, and maybe ran a bubble-sort through the smaller
          * sizes, but I decided to keep it simple.
          */
-        if (numbers[0] > numbers[1]) {
-            int temp = numbers[0];
+        if (numbers[0].value > numbers[1].value) {
+            FileElement temp = numbers[0];
             numbers[0] = numbers[1];
             numbers[1] = temp;
         }

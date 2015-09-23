@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int binary_search(int array_length, int *array, int wanted_number) {
+int binary_search(int array_length, FileElement *array, int wanted_number) {
     int start = 0;
     int end = array_length;
     int i = 0; //index
@@ -11,17 +11,16 @@ int binary_search(int array_length, int *array, int wanted_number) {
         i = (start + end) / 2;
 //        printf("start: %d, end: %d, i: %d, array[i]:%d, wanted: %d\n", start, end, i, array[i], wanted_number);
 //        sleep(1);
-        if(array[i] == wanted_number) {
+        if(array[i].value == wanted_number) {
             return i;
         }
 
-        if (array[i] < wanted_number) {
+        if (array[i].value < wanted_number) {
             start = i + 1;
-        } else if (array[i] > wanted_number) {
+        } else if (array[i].value > wanted_number) {
             end = i - 1;
         }
     }
-
     return -1;
 }
 
