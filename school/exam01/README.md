@@ -10,6 +10,9 @@ $ ./program [file_to_search] [opt: sorting_method] [opt: loud]
 ```
 #### Run example
 ##### Run program
+
+run ```make clean && make``` to recompile
+
 Standard merge sort:
 ```sh
 $ ./program 4.txt
