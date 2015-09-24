@@ -3,6 +3,7 @@
 #include "sorters/sorters.h"
 #include "searchers/searchers.h"
 #include "helpers/helpers.h"
+#include "helpers/FileHandler/filehandler.h"
 #include <string.h>
 #include <sys/time.h>
 
@@ -11,7 +12,7 @@
 #include "sorters/bubblesort.c"
 #include "sorters/mergesort.c"
 #include "searchers/binary_search.c"
-#include "helpers/filehandler.c"
+#include "helpers/FileHandler/filehandler.c"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {

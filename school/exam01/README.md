@@ -26,6 +26,10 @@ Print sorted array to output with ```loud ``` (requires specifying sorting as we
 $ ./program 3.txt merge loud
 ```
 
+#Questions
+1) Is it OK to include the header files and their respective .c files in the "main file"? Or should they be included 
+where they are used?
+
 # Sources
 Sources are also commented where they are used.
 

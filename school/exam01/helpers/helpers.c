@@ -43,7 +43,6 @@ void search_number_interaction(int int_array_size, FileElement *array, char *fil
     }
 }
 
-
 // CREDS: http://stackoverflow.com/questions/3756323/getting-the-current-time-in-milliseconds
 long long current_timestamp() {
     struct timeval te;
