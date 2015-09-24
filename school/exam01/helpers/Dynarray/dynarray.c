@@ -18,20 +18,18 @@ void Dynarray_append(Dynarray *dynarray, int value){
     fileElement.value = value;
 
     dynarray->data[dynarray->size++] = fileElement;
-    printf("VALUE OF FILEELMENT IS %d", dynarray->data[dynarray->size-1].value);
 }
 
 void Dynarray_append_with_index(Dynarray *dynarray, int value, int index){
     Dynarray_double_capacity_if_full(dynarray);
     dynarray->data[dynarray->size].value = value;
     dynarray->data[dynarray->size].original_index = index;
-    printf("Adding FileElement[%d, %d]\n", value, index);
     dynarray->size++;
 }
 
 int Dynarray_get(Dynarray *dynarray, int index){
     if(index >= dynarray->size || index < 0){
-        printf("Index %d out of bounds. Array size: %d", index, dynarray->size);
+        die("DynArray error, index out of bounds");
     }
     return dynarray->data[index].value;
 }
@@ -39,7 +37,7 @@ int Dynarray_get(Dynarray *dynarray, int index){
 void Dynarray_double_capacity_if_full(Dynarray *dynarray){
     if(dynarray->size >= dynarray->capacity){
         dynarray->capacity *= 2;
-        dynarray->data = realloc(dynarray->data, sizeof(int) * dynarray->capacity);
+        dynarray->data = realloc(dynarray->data, sizeof(FileElement) * dynarray->capacity);
     }
 }
 

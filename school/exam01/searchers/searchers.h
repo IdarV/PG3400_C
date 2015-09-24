@@ -1,0 +1,1 @@
+int binary_search(int array_length, FileElement *array, int wanted_number);
