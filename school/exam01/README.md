@@ -58,7 +58,7 @@ Just a little testing program that ensures that the sorting works as intended
 # Questions
 1) Is it OK to include the header files and their respective .c files in the "main file"? Or should they be included 
 where they are used?
-2) Should the helper-methods (*/helpers/helpers.c*) be thrown in its own class like I did, or should they just have stayed in *Program.c* ? 
+2) Should the helper-methods (*/helpers/helpers.c*) be implemented in its own class like I did, or should they just have stayed in *Program.c* ? 
 
 # Sources
 Sources are also commented where they are used.

@@ -1,1 +1,1 @@
-int binary_search(int array_length, FileElement *array, int wanted_number);
+int binary_search(Dynarray array, int wanted_number);

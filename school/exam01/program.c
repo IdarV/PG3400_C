@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 
     print_array_if_told(argc, argv, numbers);
     printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
-    search_number_interaction(numbers.size, numbers.data, argv[1]);
+    search_number_interaction(numbers, argv[1]);
 
     fclose(file);
     Dynarray_free(&numbers);

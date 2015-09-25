@@ -2,20 +2,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int binary_search(int array_length, FileElement *array, int wanted_number) {
+int binary_search(Dynarray array, int wanted_number) {
     int start = 0;
-    int end = array_length;
+    int end = array.size;
     int i = 0; //index
 
     while (start <= end) {
         i = (start + end) / 2;
-        if(array[i].value == wanted_number) {
+        int data = array.data[i].value;
+        if(data == wanted_number) {
             return i;
         }
 
-        if (array[i].value < wanted_number) {
+        if (data < wanted_number) {
             start = i + 1;
-        } else if (array[i].value > wanted_number) {
+        } else if (data > wanted_number) {
             end = i - 1;
         }
     }

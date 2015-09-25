@@ -24,7 +24,7 @@ void sort_array(char *sorting_method, Dynarray dynarray) {
     }
 }
 
-void search_number_interaction(int int_array_size, FileElement *array, char *filename) {
+void search_number_interaction(Dynarray dynarray, char *filename) {
     int search_number;
     printf("Number to search for (0 to skip): ");
     scanf("%d", &search_number);
@@ -32,13 +32,13 @@ void search_number_interaction(int int_array_size, FileElement *array, char *fil
     // do search if fourth argument exists
     if (search_number != 0) {
         // parse second arg to int, and try to get the index of it
-        int index = binary_search(int_array_size, array, search_number);
+        int index = binary_search(dynarray, search_number);
 
         // print results
         if (index == -1) {
             printf("%d is not present in  %s\n", search_number, filename);
         } else {
-            printf("index of %d in the sorted array is %d (used to be index %d)\n", search_number, index, array[index].original_index);
+            printf("index of %d in the sorted array is %d (used to be index %d)\n", search_number, index, dynarray.data[index].original_index);
         }
     }
 }
