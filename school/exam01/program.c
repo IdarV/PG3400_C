@@ -33,13 +33,13 @@ int main(int argc, char *argv[]) {
     long timestart = 0;
     timestart = current_timestamp();
 
-    sort_array(sorting_method, numbers);
+    sort_array(sorting_method, &numbers);
 
     long timestop = current_timestamp();
 
-    print_array_if_told(argc, argv, numbers);
+    print_array_if_told(argc, argv, &numbers);
     printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
-    search_number_interaction(numbers, argv[1]);
+    search_number_interaction(&numbers, argv[1]);
 
     fclose(file);
     Dynarray_free(&numbers);

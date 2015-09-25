@@ -13,34 +13,41 @@ void die(const char *message) {
     exit(1);
 }
 
-void sort_array(char *sorting_method, Dynarray dynarray) {
+void sort_array(char *sorting_method, Dynarray *dynarray) {
     if (strcmp(sorting_method, "bubble") == 0) {
-        bubble_sort(dynarray.size, dynarray.data);
+        bubble_sort(dynarray);
     } else if (strcmp(sorting_method, "merge") == 0) {
-        merge_sort(dynarray.size, dynarray.data);
+        merge_sort(dynarray->size, dynarray->data);
     } else {
         die("Didnt find any sorting argument. \nSorting methods: \"merge\", \"bubble\"\n"
                     "Usage: \"./program [file] [opt: sorting_method] [opt: number_to_search_for]\"");
     }
 }
 
-void search_number_interaction(Dynarray dynarray, char *filename) {
+void search_number_interaction(Dynarray *dynarray, char *filename) {
     int search_number;
-    printf("Number to search for (0 to skip): ");
-    scanf("%d", &search_number);
+    int cont = 1;
 
-    // do search if fourth argument exists
-    if (search_number != 0) {
-        // parse second arg to int, and try to get the index of it
-        int index = binary_search(dynarray, search_number);
+    do {
+        printf("Number to search for <0 to exit>: ");
+        cont = scanf("%d", &search_number);
 
-        // print results
-        if (index == -1) {
-            printf("%d is not present in  %s\n", search_number, filename);
+        // do search if fourth argument exists
+        if (search_number != 0) {
+            // parse second arg to int, and try to get the index of it
+            int index = binary_search(dynarray, search_number);
+
+            // print results
+            if (index == -1) {
+                printf("%d is not present in  %s\n", search_number, filename);
+            } else {
+                printf("index of %d in the sorted array is %d (used to be index %d)\n", search_number, index,
+                       dynarray->data[index].original_index);
+            }
         } else {
-            printf("index of %d in the sorted array is %d (used to be index %d)\n", search_number, index, dynarray.data[index].original_index);
+            cont = 0;
         }
-    }
+    } while (cont);
 }
 
 // CREDS: http://stackoverflow.com/questions/3756323/getting-the-current-time-in-milliseconds
@@ -51,11 +58,11 @@ long long current_timestamp() {
     return milliseconds;
 }
 
-void print_array_if_told(int argc, char *argv[], Dynarray dynarray){
-    if(argc >=4){
-        if(argv[3] != NULL) {
-            if(strcmp(argv[3], "loud") == 0) {
-                Dynarray_print(&dynarray);
+void print_array_if_told(int argc, char *argv[], Dynarray *dynarray) {
+    if (argc >= 4) {
+        if (argv[3] != NULL) {
+            if (strcmp(argv[3], "loud") == 0) {
+                Dynarray_print(dynarray);
             }
         }
     }

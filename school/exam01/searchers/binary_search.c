@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int binary_search(Dynarray array, int wanted_number) {
+int binary_search(Dynarray *array, int wanted_number) {
     int start = 0;
-    int end = array.size;
+    int end = array->size;
     int i = 0; //index
 
     while (start <= end) {
         i = (start + end) / 2;
-        int data = array.data[i].value;
+        int data = array->data[i].value;
         if(data == wanted_number) {
             return i;
         }

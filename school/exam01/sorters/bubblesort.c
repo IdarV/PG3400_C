@@ -1,5 +1,8 @@
 // Standard bubble-sort with smallest-first-implementation
-void bubble_sort(int numbers_length, FileElement *numbers) {
+void bubble_sort(Dynarray *dynarray) {
+    int numbers_length = dynarray->size;
+    FileElement *numbers = dynarray->data;
+
     for (int j = 0; j < numbers_length; j++) {
         for (int i = numbers_length - 1; i >= j + 1; i--) {
             if (numbers[i].value < numbers[i - 1].value) {

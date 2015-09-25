@@ -32,6 +32,7 @@ void test_sorting_with(char *method){
     }
 
     FileElement last = file_element_array[0];
+
     for(int i = 0; i < number_of_files; i++){
         if(file_element_array[i].value < last.value){
             printf("\033[31mTest failed, %s_sort did not sort \033[0m\n", method);
