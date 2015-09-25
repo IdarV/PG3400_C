@@ -21,12 +21,12 @@ int main(int argc, char *argv[]) {
                     "Usage: \"./program [file] [opt: sorting_method]\"\n");
     }
 
-    // open the file, and count the integers
+    // open the file
     open_file(argv[1]);
 
     Dynarray numbers;
     Dynarray_init(&numbers);
-    ints_to_array(&numbers);
+    file_to_array(&numbers);
 
     char *sorting_method = set_sort_method(argc, argv);
 
@@ -41,7 +41,8 @@ int main(int argc, char *argv[]) {
     printf("(sorting with %s took %ld ms.)\n\n", sorting_method, (timestop - timestart));
     search_number_interaction(&numbers, argv[1]);
 
-    fclose(file);
+    //close the file
+    close_file();
     Dynarray_free(&numbers);
 
     return 0;

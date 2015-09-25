@@ -10,9 +10,13 @@ void open_file(char *filename) {
     }
 }
 
+void close_file(){
+    fclose(file);
+}
+
 
 //adds integers from file to array. Array should be 'initialized' and have size
-void ints_to_array(Dynarray *dynarray) {
+void file_to_array(Dynarray *dynarray) {
     int i = 0;
     int index = 0;
     while (!feof(file)) {
