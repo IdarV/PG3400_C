@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../helpers/FileElement/FileElement.h"
 #include "../helpers/Dynarray/dynarray.h"
+#include "../sorters/sorters.h"
 
 #include "../helpers/FileElement/FileElement.c"
 #include "../sorters/mergesort.c"

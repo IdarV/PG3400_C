@@ -15,7 +15,7 @@ run ```make clean && make``` to recompile
 
 Standard merge sort:
 ```sh
-$ ./program 4.txt
+$ ./program data/4.txt
 >(sorting with merge took 45 ms.)
 >Number to search for (0 to skip): 998869
 >index of 998869 in the sorted array is 199766 (used to be index 114504)
@@ -23,11 +23,11 @@ $ ./program 4.txt
 
 Specify other sorting methods:
 ```sh
-$ ./program 3.txt bubble
+$ ./program data/3.txt bubble
 ```
 Print sorted array to output with ```loud ``` (requires specifying sorting as well)
 ```sh
-$ ./program 3.txt merge loud
+$ ./program data/4.txt merge loud
 ```
 
 ##### Run tests
@@ -51,9 +51,6 @@ DynArray(Dynamic Array) is a wannabe *Java.util.ArrayList*, made for *FileElemen
 
 #### Helpers
 All helper-methods has been put here. They mainly assist *Program.c*.
-
-#### Tests
-Just a little testing program that ensures that the sorting works as intended
 
 # Questions
 1) Is it OK to include the header files and their respective .c files in the "main file"? Or should they be included 

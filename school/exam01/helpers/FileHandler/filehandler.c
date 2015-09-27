@@ -10,7 +10,7 @@ void open_file(char *filename) {
     }
 }
 
-void close_file(){
+void close_file() {
     fclose(file);
 }
 
@@ -20,9 +20,10 @@ void file_to_array(Dynarray *dynarray) {
     int i = 0;
     int index = 0;
     while (!feof(file)) {
-        fscanf(file, "%d", &i);
-        Dynarray_append_with_index(dynarray, i, index++);
+        // Only append if scan if successful
+        if (fscanf(file, "%d", &i)) {
+            Dynarray_append_with_index(dynarray, i, index++);
+        }
     }
-
     rewind(file);
 }
