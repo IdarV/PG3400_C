@@ -1,0 +1,2 @@
+Hi this is just an output :)
+Printing variable a: 42
