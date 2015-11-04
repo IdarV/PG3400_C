@@ -5,10 +5,6 @@
 
 FILE *file = NULL;
 
-int main(int argc, char *argv[]) {
-    readFile();
-}
-
 bool isLetter(char *c){
     return (*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z');
 }
@@ -21,11 +17,11 @@ void toLowCase(char *c){
     *c = *c + 32;
 }
 
-void readFile() {
+char *readFile(char *filename) {
     int size = 1000, pos = 0;
     char *filetext = malloc(sizeof(char) * size);
     char c = NULL;
-    file = fopen("hey.txt", "r");
+    file = fopen(filename, "r");
     while (!feof(file)) {
         if (file == NULL) {
             printf("file is null\n");
@@ -39,13 +35,13 @@ void readFile() {
             }
           filetext[pos++] = c;
         }
+
         if(pos >= size - 1){
             size *= 2;
             filetext = realloc(filetext, size);
         }
 
     }
-
-    printf("value of file:\n%s\n", filetext);
     fclose(file);
+    return filetext;
 }
