@@ -1,7 +1,7 @@
 #show all warnings, compile with C11 standard, optimize the compiling with O2
 CFLAGS=-Wall -g -O2 -std='c11'
 
-all: program
+all: fileReader
 
 clean:
-	rm -f program
+	rm -f fileReader
