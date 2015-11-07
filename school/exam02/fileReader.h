@@ -1,1 +1,1 @@
-char *readFile(char *filename);
+char *readKeyFile(char *filename);

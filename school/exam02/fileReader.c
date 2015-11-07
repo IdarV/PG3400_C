@@ -20,7 +20,7 @@ void toLowCase(char *c){
     *c = *c + 32;
 }
 
-char *readFile(char *filename) {
+char *readKeyFile(char *filename) {
     int size = 1000, pos = 0;
     char *filetext = malloc(sizeof(char) * size);
 
@@ -64,3 +64,5 @@ char *readFile(char *filename) {
     fclose(file);
     return filetext;
 }
+
+char *readFile

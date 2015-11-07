@@ -1,12 +1,24 @@
+#include "fileEncoder.h"
 #include "fileReader.h"
 #include <string.h>
 
-int findNextIndex(char c, char *keyFile) {
-    int index = 1;
-    char currentChar = keyFile[index++];
+bool isInRange(int start, int end, int n) {
+    for (int i = start; i <= end; i++) {
+        if (n == i) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// d is distance
+int findNextIndex(char c, char *keyFile, int lastIndex, int d) {
+    int index = 0;
+    char currentChar = 0;
     do {
         currentChar = keyFile[index];
-        if (currentChar == c) {
+        // if currentchar and currenchar is out of range of the last char
+        if (currentChar == c && !isInRange(lastIndex - d, lastIndex + d, index)) {
             return index;
         }
         index++;
@@ -15,50 +27,74 @@ int findNextIndex(char c, char *keyFile) {
     return 0;
 }
 
+// default 2
 char *encode(char *keyFile, char *secretMessage) {
-    int size = 1000;
-    char *encodedMessage = malloc(sizeof(char) * size);
+    return encodeWithDistance(keyFile, secretMessage, 2);
+}
+
+char *encodeWithDistance(char *keyFile, char *secretMessage, int d) {
+    int size = 1000; // Initial size of encoded message
+    int firstSave = 0; // Check if we have saved a string yet. This is important later
+    int lastIndex = 0; // Last used key-index
+    char *encodedMessage = malloc(sizeof(char) * size); // Encoded message
+    char c; // Current char
+
     if (NULL == encodedMessage) {
         printf("error allocating memory for encoded message\n");
         return NULL;
     }
-    char *keyfile = readFile(keyFile);
+    char *keyfile = readFile(keyFile); // Open keyfile
+
     if (NULL == keyfile) {
         printf("error allocating memory for keyfile\n");
         return NULL;
     }
-    char c;
-    FILE *file = NULL;
+
+    FILE *file = NULL; // Open secret message
     file = fopen(secretMessage, "r");
     if (file == NULL) {
         printf("Couldn't open file\n");
         return NULL;
     }
+    // While we haven't read to the end of the file
     while (!feof(file)) {
+        // Get next char
         c = fgetc(file);
-        char currentIndex[16];
-        // If the charater is letter or a space, and is not a break character
-        if ((isLetter(&c) || c == 32) && c != '\0') {
+        // Longest int64 is 19 characters + two brackets + minus sign + escape character = 23
+        char currentString[23];
+        // If the charater is letter or a space
+        if (isLetter(&c) || c == 32) {
             int i = 0;
-            if(c == 32){
-                sprintf(currentIndex, " ");
+            // Just add a space if character is space
+            if (c == 32) {
+                sprintf(currentString, " ");
             }
+                // Add a minus sign and search for lowcase of current number
             else if (isHighCase(&c)) {
-                i = findNextIndex(c + 32, keyfile);
-                sprintf(currentIndex, "[-%d]", i);
-            } else{
-                i = findNextIndex(c, keyfile);
-                sprintf(currentIndex, "[%d]", i);
+                i = findNextIndex(c + 32, keyfile, lastIndex, d);
+                sprintf(currentString, "[-%d]", i);
             }
-            strncat(encodedMessage, currentIndex, 10);
-//            printf("%c = %d\n", c, i);
-//            sprintf(currentIndex, "[%d]", i);
-        }
-        encodedMessage = realloc(encodedMessage, size);
+                // Print next lowcase of current number
+            else {
+                i = findNextIndex(c, keyfile, lastIndex, d);
+                sprintf(currentString, "[%d]", i);
+            }
+            lastIndex = i;
 
-        if (encodedMessage == NULL) {
-            printf("Error incrementing memory for file conents\n");
-            return NULL;
+            if (currentString != NULL) {
+                if (firstSave == 0) {
+                    // Cudos til Fredrick
+                    strncpy(encodedMessage, currentString, (strlen(currentString)) + 1);
+                    firstSave++;
+                } else {
+
+                    char *dest = strncat(encodedMessage, currentString, (strlen(currentString)) + 1); /// sizeof(char)
+                    if (dest == NULL) {
+                        printf("error writing to encoded file");
+                        return NULL;
+                    }
+                }
+            }
         }
     }
     free(keyfile);
