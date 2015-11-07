@@ -1,9 +1,8 @@
 #include "fileReader.h"
 #include <string.h>
 
-
 int findNextIndex(char c, char *keyFile) {
-    int index = 0;
+    int index = 1;
     char currentChar = keyFile[index++];
     do {
         currentChar = keyFile[index];
@@ -13,7 +12,7 @@ int findNextIndex(char c, char *keyFile) {
         index++;
     } while ('\0' != currentChar);
 
-    return index;
+    return 0;
 }
 
 char *encode(char *keyFile, char *secretMessage) {
@@ -37,21 +36,24 @@ char *encode(char *keyFile, char *secretMessage) {
     }
     while (!feof(file)) {
         c = fgetc(file);
-        if (isLetter(&c) && c != '\0') {
-//        printf("%c", c);
-            if (isHighCase(&c)) {
-
+        char currentIndex[16];
+        // If the charater is letter or a space, and is not a break character
+        if ((isLetter(&c) || c == 32) && c != '\0') {
+            int i = 0;
+            if(c == 32){
+                sprintf(currentIndex, " ");
             }
-            int i = findNextIndex(c, keyfile);
-            printf("%c = %d\n", c, i);
-            sprintf(encodedMessage, "[%d]", i);
-            //encodedMessage = strncat(encodedMessage, currentMessage, 4);
-            if (encodedMessage == NULL) {
-                printf("error encoding message\n");
-                return NULL;
+            else if (isHighCase(&c)) {
+                i = findNextIndex(c + 32, keyfile);
+                sprintf(currentIndex, "[-%d]", i);
+            } else{
+                i = findNextIndex(c, keyfile);
+                sprintf(currentIndex, "[%d]", i);
             }
+            strncat(encodedMessage, currentIndex, 10);
+//            printf("%c = %d\n", c, i);
+//            sprintf(currentIndex, "[%d]", i);
         }
-        size += 3;
         encodedMessage = realloc(encodedMessage, size);
 
         if (encodedMessage == NULL) {
