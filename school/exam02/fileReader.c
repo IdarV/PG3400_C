@@ -65,4 +65,42 @@ char *readKeyFile(char *filename) {
     return filetext;
 }
 
-char *readFile
+char *readFile(char *filename){
+    int size = 100, pos = 0;
+    char *filetext = malloc(sizeof(char) * size);
+
+    if(filetext == NULL){
+        printf("Error allocating memory for file contents");
+        return NULL;
+    }
+
+    char c;
+    FILE *thisFile = fopen(filename, "r");
+    if (thisFile == NULL) {
+        printf("Couldn't open file");
+        return NULL;
+    }
+
+    while (!feof(thisFile)) {
+        //fgetc(file, "%s\n", c);
+        c = fgetc(thisFile);
+
+        filetext[pos++] = c;
+
+        if(pos >= size - 1){
+            size *= 2;
+            filetext = realloc(filetext, size);
+
+            if(filetext == NULL){
+                printf("Error incrementing memory for file conents");
+                return NULL;
+            }
+        }
+
+    }
+    // Add a break character so valgrind shuts up
+    filetext[pos++] = '\0';
+
+    fclose(thisFile);
+    return filetext;
+}

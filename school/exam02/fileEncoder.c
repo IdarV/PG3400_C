@@ -27,68 +27,72 @@ int findNextIndex(char c, char *keyFile, int lastIndex, int d) {
     return 0;
 }
 
-// default 2
+// default d = 2
 char *encode(char *keyFile, char *secretMessage) {
     return encodeWithDistance(keyFile, secretMessage, 2);
 }
 
-char *encodeWithDistance(char *keyFile, char *secretMessage, int d) {
+char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
     int size = 1000; // Initial size of encoded message
     int firstSave = 0; // Check if we have saved a string yet. This is important later
     int lastIndex = 0; // Last used key-index
-    char *encodedMessage = malloc(sizeof(char) * size); // Encoded message
     char c; // Current char
+    int index = 0; // Current index in secret message
+    char *encodedMessage = malloc(sizeof(char) * size); // Encoded message
 
     if (NULL == encodedMessage) {
         printf("error allocating memory for encoded message\n");
         return NULL;
     }
-    char *keyfile = readFile(keyFile); // Open keyfile
+    char *keyfile = readKeyFile(keyFileName); // Open keyfile
 
     if (NULL == keyfile) {
         printf("error allocating memory for keyfile\n");
         return NULL;
     }
 
-    FILE *file = NULL; // Open secret message
-    file = fopen(secretMessage, "r");
-    if (file == NULL) {
+    char *secretfile = readFile(secretFileName);
+    if (NULL == secretfile) {
         printf("Couldn't open file\n");
         return NULL;
     }
-    // While we haven't read to the end of the file
-    while (!feof(file)) {
-        // Get next char
-        c = fgetc(file);
+
+
+    // Get next char
+    c = secretfile[index++];
+    do {
+        // Holds current string to put in encodedMessage
         // Longest int64 is 19 characters + two brackets + minus sign + escape character = 23
         char currentString[23];
         // If the charater is letter or a space
         if (isLetter(&c) || c == 32) {
-            int i = 0;
+            int charIndex = 0;
             // Just add a space if character is space
             if (c == 32) {
                 sprintf(currentString, " ");
             }
                 // Add a minus sign and search for lowcase of current number
             else if (isHighCase(&c)) {
-                i = findNextIndex(c + 32, keyfile, lastIndex, d);
-                sprintf(currentString, "[-%d]", i);
+                charIndex = findNextIndex(c + 32, keyfile, lastIndex, d);
+                sprintf(currentString, "[-%d]", charIndex);
             }
                 // Print next lowcase of current number
             else {
-                i = findNextIndex(c, keyfile, lastIndex, d);
-                sprintf(currentString, "[%d]", i);
+                charIndex = findNextIndex(c, keyfile, lastIndex, d);
+                sprintf(currentString, "[%d]", charIndex);
             }
-            lastIndex = i;
+            lastIndex = charIndex;
 
             if (currentString != NULL) {
                 if (firstSave == 0) {
                     // Cudos til Fredrick
+                    // If the string is not yet put into memory, it had no escape character to look for. Therefore,
+                    // check for
                     strncpy(encodedMessage, currentString, (strlen(currentString)) + 1);
                     firstSave++;
                 } else {
-
-                    char *dest = strncat(encodedMessage, currentString, (strlen(currentString)) + 1); /// sizeof(char)
+                    // Concatinate the string on the encoded message.
+                    char *dest = strncat(encodedMessage, currentString, (strlen(currentString)) + 1);
                     if (dest == NULL) {
                         printf("error writing to encoded file");
                         return NULL;
@@ -96,9 +100,14 @@ char *encodeWithDistance(char *keyFile, char *secretMessage, int d) {
                 }
             }
         }
-    }
+
+        c = secretfile[index++];
+    } while(c != '\0'); // While we haven't read the break character
+
+    // free files we don't need anymore
     free(keyfile);
-    fclose(file);
+    free(secretfile);
+
     return encodedMessage;
 }
 
