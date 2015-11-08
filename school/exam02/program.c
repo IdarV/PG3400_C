@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     char *supersecret = decode(filename, filetext);
 
 //    printf("%s\n", filetext);
-//    printf("%s/n", supersecret);
+    printf("%s\n", supersecret);
     free(filetext);
     free(supersecret);
 
