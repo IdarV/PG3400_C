@@ -1,24 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "stringHelpers.h"
 #include "fileReader.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 FILE *file = NULL;
-
-// Check if the char ASCII is between [A-Za-z]
-bool isLetter(char *c){
-    return (32 <= *c && 126 >= *c); // || (*c >= 'A' && *c <= 'Z'
-}
-
-// If the char is lower than 90, its highcase
-bool isHighCase(char *c){
-    return 65 <= *c && 90 >= *c;
-}
-
-// To make a char lowcase, add 32. This is basic ASCII.
-void toLowCase(char *c){
-    *c = *c + 32;
-}
 
 char *readKeyFile(char *filename) {
     int size = 1000, pos = 0;
@@ -42,7 +30,7 @@ char *readKeyFile(char *filename) {
 
         if(isLetter(&c)){
             if(isHighCase(&c)){
-                toLowCase(&c);
+                toLowCase(&c); // #31:17
             }
           filetext[pos++] = c;
         }

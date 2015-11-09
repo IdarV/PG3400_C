@@ -1,7 +1,10 @@
 #include <stdio.h>
-#include "fileReader.c"
-#include "fileEncoder.c"
-#include "fileDecoder.c"
+#include <stdlib.h>
+
+#include "stringHelpers.h"
+#include "fileEncoder.h"
+#include "fileDecoder.h"
+#include "fileReader.h"
 
 int main(int argc, char *argv[]) {
     char *filename = "hey.txt";
@@ -11,6 +14,7 @@ int main(int argc, char *argv[]) {
     if (filetext == NULL) {
         return -1;
     }
+
     char *supersecret = decode(filename, filetext);
 
     if (supersecret == NULL) {

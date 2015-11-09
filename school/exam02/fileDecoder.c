@@ -1,6 +1,9 @@
+#include "stringHelpers.h"
 #include "fileDecoder.h"
 #include "fileReader.h"
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Get the number in between two brackets
 int getNumber(char *secretMessage, int *index) {
@@ -49,7 +52,7 @@ char *decode(char *keyFileName, char *secretMessage) {
             } else {
                 // Make number positive
                 number *= -1;
-                // Print highcase(Unicode conv low->high = 32)
+                // Print highcase(Unicode conv low->high = +32)
                 crackedMessage[crackedMessageIndex++] = keyFile[number] - 32;
             }
         }

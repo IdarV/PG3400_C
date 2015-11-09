@@ -1,32 +1,9 @@
+#include "stringHelpers.h"
 #include "fileEncoder.h"
 #include "fileReader.h"
 #include <string.h>
-
-
-bool isInRange(int start, int end, int n) {
-    for (int i = start; i <= end; i++) {
-        if (n == i) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// d is distance
-int findNextIndex(char *c, char *keyFile, int *lastIndex, int *d) {
-    int index = 0;
-    char currentChar = 0;
-    do {
-        currentChar = keyFile[index];
-        // if currentchar and currenchar is out of range of the last char
-        if (currentChar == *c && !isInRange(lastIndex - d, *lastIndex + *d, index)) {
-            return index;
-        }
-        index++;
-    } while ('\0' != currentChar);
-
-    return 0;
-}
+#include <stdio.h>
+#include <stdlib.h>
 
 // default d = 2
 char *encode(char *keyFile, char *secretMessage) {
@@ -44,6 +21,9 @@ void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfi
         // Print next lowcase of current number
     else {
         charIndex = findNextIndex(c, keyfile, lastIndex, d);
+//        if(NULL == charIndex){
+//
+//        }
         sprintf(currentString, "[%d]", charIndex);
     }
     currentString += '\0';

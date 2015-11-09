@@ -1,1 +1,0 @@
-char *decode(char *keyFileName, char *secretMessageFileName);
