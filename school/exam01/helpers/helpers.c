@@ -16,9 +16,13 @@ void die(const char *message) {
 void sort_array(char *sorting_method, Dynarray *dynarray) {
     if (strcmp(sorting_method, "bubble") == 0) {
         bubble_sort(dynarray);
-    } else if (strcmp(sorting_method, "merge") == 0) {
+    }
+
+    else if (strcmp(sorting_method, "merge") == 0) {
         merge_sort(dynarray->size, dynarray->data);
-    } else {
+    }
+
+    else {
         die("Didnt find any sorting argument. \nSorting methods: \"merge\", \"bubble\"\n"
                     "Usage: \"./program [file] [opt: sorting_method] [opt: number_to_search_for]\"");
     }
