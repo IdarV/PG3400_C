@@ -7,8 +7,8 @@
 #include "fileReader.h"
 
 int main(int argc, char *argv[]) {
-    char *filename = "hey.txt";
-    char *secretFile = "secretMessage.txt";
+    char *filename = "../beatItMJ.txt";
+    char *secretFile = "../secretMessage.txt";
     char *filetext = encode(filename, secretFile);
 
     if (filetext == NULL) {

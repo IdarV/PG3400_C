@@ -2,7 +2,7 @@
 # cudos til Tomas som hjalp meg med makefiles
 
 CFLAGS=-Wall -g -std='c11'
-INC=inc
+INC=../inc
 CFILES=$(wildcard *.c)
 OBJECTS=$(CFILES:.c=.o)
 
@@ -13,7 +13,6 @@ all: program
 
 program: $(OBJECTS)
 	gcc $(CFLAGS) -I$(INC) $^ -o $@
-
 
 clean:
 	rm -f program
