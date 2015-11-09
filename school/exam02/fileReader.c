@@ -7,12 +7,12 @@ FILE *file = NULL;
 
 // Check if the char ASCII is between [A-Za-z]
 bool isLetter(char *c){
-    return (*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z');
+    return (32 <= *c && 126 >= *c); // || (*c >= 'A' && *c <= 'Z'
 }
 
 // If the char is lower than 90, its highcase
 bool isHighCase(char *c){
-    return *c <= 90;
+    return 65 <= *c && 90 >= *c;
 }
 
 // To make a char lowcase, add 32. This is basic ASCII.
@@ -82,7 +82,6 @@ char *readFile(char *filename){
     }
 
     while (!feof(thisFile)) {
-        //fgetc(file, "%s\n", c);
         c = fgetc(thisFile);
 
         filetext[pos++] = c;
