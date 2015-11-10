@@ -1,15 +1,16 @@
 #include "stringHelpers.h"
 #include "fileEncoder.h"
 #include "fileReader.h"
+//#include "errorHandler.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-static int *errorList;
+static ErrorHandler *errorHandler;
 
 // default d = 2
-char *encode(char *keyFile, char *secretMessage, int *errors) {
-    errorList = errors;
+char *encode(char *keyFile, char *secretMessage, ErrorHandler *errors) {
+    errorHandler = errors;
     return encodeWithDistance(keyFile, secretMessage, 2);
 }
 
@@ -19,16 +20,26 @@ void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfi
     // Just add a space if character is space
     // Add a minus sign and search for lowcase of current number
     if (isHighCase(c)) {
-        charIndex = findNextIndex(c + 32, keyfile, lastIndex, d);
-        sprintf(currentString, "[-%d]", charIndex);
+        toLowCase(c);
+        charIndex = findNextIndex(c, keyfile, lastIndex, d);
+        if(-1 == charIndex){
+            errorHandler->errors[0] = 1;
+            sprintf(currentString, "%c", *c);
+        }
+        else {
+            sprintf(currentString, "[-%d]", charIndex);
+        }
     }
         // Print next lowcase of current number
     else {
         charIndex = findNextIndex(c, keyfile, lastIndex, d);
         if(-1 == charIndex){
-            errorList[0] = 33;
+            errorHandler->errors[0] = 1;
+            sprintf(currentString, "%c", *c);
         }
-        sprintf(currentString, "[%d]", charIndex);
+        else{
+            sprintf(currentString, "[%d]", charIndex);
+        }
     }
 
     currentString += '\0';
@@ -49,7 +60,7 @@ void addLetter(char *stringToAdd, char *encodedMessage, int *firstSave){
             char *dest = strncat(encodedMessage, stringToAdd, (strlen(stringToAdd)) + 1);
 
             if (dest == NULL) {
-                printf("error writing to encoded file");
+                errorHandler->errors[1] = 1;
             }
         }
     }

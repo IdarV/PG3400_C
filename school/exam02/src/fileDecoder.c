@@ -44,6 +44,7 @@ char *decode(char *keyFileName, char *secretMessage) {
     int secretMessageSize = strlen(secretMessage);
     for (int i = 0; i < secretMessageSize - 1; i++) {
         char currentCrackedChar = secretMessage[i];
+        // TODO: RETURN NULL IF NOT FOUND OR SOMETHING
 
         if (currentCrackedChar == '[') {
             int number = getNumber(secretMessage, &i);

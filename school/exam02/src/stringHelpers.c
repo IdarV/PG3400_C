@@ -18,7 +18,7 @@ bool isLetter(char *c){
 
 // If the char is lower than 90, its highcase
 bool isHighCase(char *c){
-    return 65 <= *c && 90 >= *c;
+    return 'A' <= *c && 'Z' >= *c;
 }
 
 // To make a char lowcase, add 32. This is basic ASCII.
@@ -29,6 +29,9 @@ void toLowCase(char *c){
 // d is distance
 int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
     int start = *lastIndex;
+    if(start == -1){
+        start = 0;
+    }
     int looped = 0;
     int index = 0;
     char currentChar = 0;
@@ -36,15 +39,13 @@ int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
     do {
         currentChar = key[index];
 
-        printf("is %c == %c ?\n", currentChar, *c);
-
         // if currentchar and currenchar is out of range of the last char
         if (currentChar == *c && !isInRange(*lastIndex - *d, *lastIndex + *d, index)) {
             return index;
         }
 
         else if('\0' == currentChar){
-            index = 0;
+            index = -1;
             currentChar = key[index];
             looped = 1;
         }
