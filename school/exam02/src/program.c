@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 #include "stringHelpers.h"
-#include "fileEncoder.h"
-#include "fileDecoder.h"
+#include "secretCoder.h"
+#include "secretDecoder.h"
 #include "fileReader.h"
 #include "errorHandler.h"
 // FGETS
@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
 
     free(filetext);
     free(supersecret);
+    free(errorHandler->errorMessages);
     free(errorHandler);
 
     return 0;

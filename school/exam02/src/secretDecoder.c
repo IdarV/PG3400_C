@@ -1,5 +1,5 @@
 #include "stringHelpers.h"
-#include "fileDecoder.h"
+#include "secretDecoder.h"
 #include "fileReader.h"
 #include <string.h>
 #include <stdio.h>

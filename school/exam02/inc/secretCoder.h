@@ -1,7 +1,8 @@
-//int encode(const char *inputMessageFile, const char *keyFile, char *encodedStream){
-//
-//    return 0;
-//}
-//int decode(const char *inputCodeFile, const char *keyFile, char *decodedMessage){
-//    return 0;
-//}
+#include "errorHandler.h"
+#ifndef FILEENCODER_HEADER
+#define FILEENCODER_HEADER
+
+char *encodeWithDistance(char *keyFile, char *secretMessage, int d);
+char *encode(char *keyFile, char *secretMessage, ErrorHandler *errors);
+
+#endif
