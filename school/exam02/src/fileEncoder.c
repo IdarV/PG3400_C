@@ -5,13 +5,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static int *errorList;
+
 // default d = 2
-char *encode(char *keyFile, char *secretMessage) {
+char *encode(char *keyFile, char *secretMessage, int *errors) {
+    errorList = errors;
     return encodeWithDistance(keyFile, secretMessage, 2);
 }
 
 void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfile){
     int charIndex = 0;
+
     // Just add a space if character is space
     // Add a minus sign and search for lowcase of current number
     if (isHighCase(c)) {
@@ -21,11 +25,12 @@ void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfi
         // Print next lowcase of current number
     else {
         charIndex = findNextIndex(c, keyfile, lastIndex, d);
-//        if(NULL == charIndex){
-//
-//        }
+        if(-1 == charIndex){
+            errorList[0] = 33;
+        }
         sprintf(currentString, "[%d]", charIndex);
     }
+
     currentString += '\0';
     *lastIndex = charIndex;
 }
@@ -53,7 +58,7 @@ void addLetter(char *stringToAdd, char *encodedMessage, int *firstSave){
 char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
     int size = 1000; // Initial size of encoded message
     int firstSave = 0; // Check if we have saved a string yet. This is important later
-    int lastIndex = 0; // Last used key-index
+    int lastIndex = 9; // Last used key-index
     char c; // Current char
     int index = 0; // Current index in secret message
     char *encodedMessage = calloc(size, sizeof(char) * size); // Encoded message
@@ -82,7 +87,7 @@ char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
     do {
         // Holds current string to put in encodedMessage
         // Longest int64 is 19 characters + two brackets + minus sign + escape character = 23
-        char currentString[50] = {'e'};
+        char currentString[50] = {};
         // If the charater is letter or a space
         if (isLetter(&c)) {
             getLetter(&c, currentString, &lastIndex, &d, keyfile);
@@ -95,7 +100,6 @@ char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
     // free files we don't need anymore
     free(keyfile);
     free(secretfile);
-
 
     return encodedMessage;
 }

@@ -1,5 +1,6 @@
 #include "stringHelpers.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 bool isInRange(int start, int end, int n) {
     for (int i = start; i <= end; i++) {
@@ -28,26 +29,31 @@ void toLowCase(char *c){
 // d is distance
 int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
     int start = *lastIndex;
+    int looped = 0;
     int index = 0;
     char currentChar = 0;
 
     do {
         currentChar = key[index];
 
+        printf("is %c == %c ?\n", currentChar, *c);
+
         // if currentchar and currenchar is out of range of the last char
-        if (currentChar == *c && !isInRange(lastIndex - d, *lastIndex + *d, index)) {
+        if (currentChar == *c && !isInRange(*lastIndex - *d, *lastIndex + *d, index)) {
             return index;
         }
 
         else if('\0' == currentChar){
-            index = 1;
+            index = 0;
             currentChar = key[index];
+            looped = 1;
         }
 
         index++;
+//        printf("%d = %d ? \n", index, start);
 
-    } while (start != currentChar);
+    } while (start != index || looped == 0);
 
-    return 0;
+    return -1;
 }
 
