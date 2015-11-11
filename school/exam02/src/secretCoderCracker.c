@@ -6,7 +6,6 @@
 DIR *dir;
 struct dirent *ent;
 
-
 char *crack(char *encodedMessage, char *keyFilesFolder, char *wordList) {
     dir = opendir(keyFilesFolder);
 

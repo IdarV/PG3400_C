@@ -6,17 +6,46 @@
 #include "secretCoder.h"
 #include "secretDecoder.h"
 #include "secretCoderCracker.h"
+#include "arrayList.h"
 #include "fileReader.h"
 #include "errorHandler.h"
 // FGETS
 
 int main(int argc, char *argv[]) {
-// char *encodedMessage, char *keyFilesFolder, char *wordListFile){
-    char *encodedMessage = "";
-    char *keyFilesFolder = "../HE2/songLibrary";
-    char *wordListFile = "/usr/share/dict/words";
 
-    crack(encodedMessage, keyFilesFolder, wordListFile);
+    char *wo = "keyFileName\0";
+    char *wordListFile = malloc(sizeof(char) * 80);
+    memcpy(wordListFile, wo, strlen(wo) + 1);
+
+    char *du = "KeyFileContent\0";
+    char *dubby = malloc(sizeof(char) * 80);
+    memcpy(dubby, du, strlen(du) + 1);
+
+    ArrayList *arrayList = initArrayList();
+    addKeyFile(arrayList, wordListFile, dubby);
+    printAll(arrayList);
+    arrayList_free(arrayList);
+//    free(wordListFile);
+//    free(dubby);
+
+
+
+// char *encodedMessage, char *keyFilesFolder, char *wordListFile){
+//    char *encodedMessage = "";
+//    char *keyFilesFolder = "../HE2/songLibrary";
+//    char *wordListFile = "/usr/share/dict/words";
+//    crack(encodedMessage, keyFilesFolder, wordListFile);
+
+
+
+
+
+
+
+
+
+
+
 //    char *filename = "../hey.txt";
 //    char *secretFile = "../secretMessage.txt";
 //    if(0 == strcmp(argv[1], "crack")){
