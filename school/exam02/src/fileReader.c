@@ -54,6 +54,7 @@ char *readKeyFile(char *filename) {
 }
 
 char *readFile(char *filename){
+    printf("printf");
     int size = 100, pos = 0;
     char *filetext = malloc(sizeof(char) * size);
 

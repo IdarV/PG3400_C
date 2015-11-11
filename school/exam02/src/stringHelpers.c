@@ -13,7 +13,8 @@ bool isInRange(int start, int end, int n) {
 
 // Check if the char ASCII is between [A-Za-z]
 bool isLetter(char *c){
-    return (32 <= *c && 126 >= *c); // || (*c >= 'A' && *c <= 'Z'
+    //return (32 <= *c && 126 >= *c); // || (*c >= 'A' && *c <= 'Z'
+    return (('A' <= *c && 'Z' >= *c) || ('a' <= *c && 'z' >= *c));
 }
 
 // If the char is lower than 90, its highcase
