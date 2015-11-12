@@ -13,28 +13,11 @@
 
 int main(int argc, char *argv[]) {
 
-    char *wo = "keyFileName\0";
-    char *wordListFile = malloc(sizeof(char) * 80);
-    memcpy(wordListFile, wo, strlen(wo) + 1);
-
-    char *du = "KeyFileContent\0";
-    char *dubby = malloc(sizeof(char) * 80);
-    memcpy(dubby, du, strlen(du) + 1);
-
-    ArrayList *arrayList = initArrayList();
-    addKeyFile(arrayList, wordListFile, dubby);
-    printAll(arrayList);
-    arrayList_free(arrayList);
-//    free(wordListFile);
-//    free(dubby);
-
-
-
-// char *encodedMessage, char *keyFilesFolder, char *wordListFile){
-//    char *encodedMessage = "";
-//    char *keyFilesFolder = "../HE2/songLibrary";
-//    char *wordListFile = "/usr/share/dict/words";
-//    crack(encodedMessage, keyFilesFolder, wordListFile);
+   //char *encodedMessage, char *keyFilesFolder, char *wordListFile){
+   char *encodedMessage = "";
+   char *keyFilesFolder = "../HE2/songLibrary";
+   char *wordListFile = "/usr/share/dict/words";
+   crack(encodedMessage, keyFilesFolder, wordListFile);
 
 
 
@@ -77,4 +60,21 @@ int main(int argc, char *argv[]) {
 //    free(errorHandler);
 //
 //    return 0;
+
+
+
+
+
+//    char *wo = "keyFileName\0";
+    // char *wordListFile = malloc(sizeof(char) * 80);
+    // memcpy(wordListFile, wo, strlen(wo) + 1);
+    //
+    // char *du = "KeyFileContent\0";
+    // char *dubby = malloc(sizeof(char) * 80);
+    // memcpy(dubby, du, strlen(du) + 1);
+    //
+    // ArrayList *arrayList = initArrayList();
+    // addKeyFile(arrayList, wordListFile, dubby);
+    // printAll(arrayList);
+    // arrayList_free(arrayList);
 }

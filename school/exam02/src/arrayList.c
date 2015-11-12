@@ -49,10 +49,11 @@ void arrayList_free(ArrayList *arrayList){
 }
 
 void reAllocIfNecessary(ArrayList *arrayList){
+    // Realloc if next indexes makes each array bigger than we have already allocated.
     if(((arrayList->keyfilenamesIndex + 1) * sizeof(char*))> sizeof(arrayList->keyfilenames)){
-        arrayList->keyfilenames = realloc(arrayList->keyfilenames, sizeof(arrayList->keyfilenames) * 2);
+        arrayList->keyfilenames = realloc(arrayList->keyfilenames, sizeof(arrayList->keyfilenames) * arrayList->keyfilenamesIndex * 2  );
     }
     if(((arrayList->keyfilesIndex + 1) * sizeof(char*))> sizeof(arrayList->keyfiles)){
-        arrayList->keyfiles = realloc(arrayList->keyfiles, sizeof(arrayList->keyfiles) * 2);
+        arrayList->keyfiles = realloc(arrayList->keyfiles, sizeof(arrayList->keyfiles) * arrayList->keyfilesIndex *  2);
     }
 }
