@@ -10,6 +10,7 @@ typedef struct{
 
 void addError(ErrorHandler *errors, int errorcode);
 void printErrorMessages(ErrorHandler *errorHandler);
+void errorHandler_free(ErrorHandler *errorHandler);
 
 ErrorHandler *initErrorHandler();
 

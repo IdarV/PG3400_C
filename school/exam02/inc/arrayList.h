@@ -12,7 +12,7 @@ typedef struct{
     char **keyfiles;
 } ArrayList;
 
-ArrayList *initArrayList();
+ArrayList *initCrackerArrayList();
 void printAllNames(ArrayList *arrayList);
 void printAll(ArrayList *arrayList);
 void addKeyFile(ArrayList *arrayList, char *keyFileName, char *keyFileContents);
