@@ -59,3 +59,6 @@ int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
     return -1;
 }
 
+// char **stringToList(char *string){
+//
+// }

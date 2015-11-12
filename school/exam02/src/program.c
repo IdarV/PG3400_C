@@ -12,45 +12,31 @@
 // FGETS
 
 int main(int argc, char *argv[]) {
+  ErrorHandler *errorHandler = initErrorHandler();
+  char *filename = "../HE2/songLibrary/wakaWaka.txt";
+  char *secretFile = "../secretMessage.txt";
 
-     ErrorHandler *errorHandler = initErrorHandler();
-     char *filename = "../HE2/songLibrary/wakaWaka.txt";
-     char *secretFile = "../secretMessage.txt";
+  char *encodedMessage = encode(filename, secretFile, errorHandler);
+  printErrorMessages(errorHandler);
+
+  char *keyFilesFolder = "../HE2/songLibrary";
+  char *wordListFile = "/usr/share/dict/words";
+  crack(encodedMessage, keyFilesFolder, wordListFile);
+  printf("%s\n", encodedMessage);
+  errorHandler_free(errorHandler);
+  free(errorHandler);
+  free(encodedMessage);
+
+  //    char *wo = "keyFileName\0";
+  // char *wordListFile = malloc(sizeof(char) * 80);
+  // memcpy(wordListFile, wo, strlen(wo) + 1);
   //
-     char *encodedMessage = encode(filename, secretFile, errorHandler);
-     printErrorMessages(errorHandler);
-
-   char *keyFilesFolder = "../HE2/songLibrary";
-   char *wordListFile = "/usr/share/dict/words";
-   crack(encodedMessage, keyFilesFolder, wordListFile);
-   printf("%s\n", encodedMessage);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    char *wo = "keyFileName\0";
-    // char *wordListFile = malloc(sizeof(char) * 80);
-    // memcpy(wordListFile, wo, strlen(wo) + 1);
-    //
-    // char *du = "KeyFileContent\0";
-    // char *dubby = malloc(sizeof(char) * 80);
-    // memcpy(dubby, du, strlen(du) + 1);
-    //
-    // ArrayList *arrayList = initArrayList();
-    // addKeyFile(arrayList, wordListFile, dubby);
-    // printAll(arrayList);
-    // arrayList_free(arrayList);
+  // char *du = "KeyFileContent\0";
+  // char *dubby = malloc(sizeof(char) * 80);
+  // memcpy(dubby, du, strlen(du) + 1);
+  //
+  // ArrayList *arrayList = initArrayList();
+  // addKeyFile(arrayList, wordListFile, dubby);
+  // printAll(arrayList);
+  // arrayList_free(arrayList);
 }

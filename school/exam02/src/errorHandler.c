@@ -35,6 +35,10 @@ void printErrorMessages(ErrorHandler *errorHandler) {
     }
 }
 
+void errorHandler_free(ErrorHandler *errorHandler){
+  free(errorHandler->errorMessages);
+}
+
 
 void addError(ErrorHandler *errors, int errorcode) {
     errors->errors[errors->index++] = errorcode;

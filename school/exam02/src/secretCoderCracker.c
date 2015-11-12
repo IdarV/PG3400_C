@@ -7,28 +7,33 @@
 
 // DIR *dir;
 // struct dirent *ent;
-ArrayList *arrayList;
+ArrayList *crackerArrayList;
 
 char *crack(char *encodedMessage, char *keyFilesFolder, char *wordList) {
-    arrayList = initArrayList();
+    crackerArrayList = initCrackerArrayList();
 
-    ReadKeyFiles(arrayList,keyFilesFolder);
-    //printAll(arrayList);
-    for(int i = 0; i < arrayList->keyfilesIndex; i++){
+    ReadKeyFiles(crackerArrayList,keyFilesFolder);
+    char *words = readFile("/usr/share/dict/words");
+    int wordsSize = strlen(words) + 1;
+
+    char wordsCopy[wordsSize];
+    strncpy(wordsCopy, words, wordsSize);
+    free(words);
+    // printf("%s\n", wordsCopy);
+
+    char *token;
+    char septs[] = "\n";
+
+    token = strtok(wordsCopy, septs);
+    while(token != NULL){
+      printf("%s\n", token);
+      token = strtok(NULL, septs);
+    }
 
 
-       char *supersecret = decode(arrayList->keyfilenames[i], encodedMessage);
-
-       if (supersecret == NULL) {
-           //return -1;
-       }
-       else{
-         printf("%s: %s\n", arrayList->keyfilenames[i],supersecret);
-       }
-     }
 
 
-    arrayList_free(arrayList);
+    arrayList_free(crackerArrayList);
     return keyFilesFolder;
 
 }

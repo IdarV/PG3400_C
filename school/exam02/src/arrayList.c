@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-ArrayList *initArrayList(){
+ArrayList *initCrackerArrayList(){
     //  int score; char *bestmatch;  char **keyfilenames; char **keyfiles;
     ArrayList *arrayList = malloc(sizeof(ArrayList));
 

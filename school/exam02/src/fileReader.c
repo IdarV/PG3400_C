@@ -57,7 +57,6 @@ char *readKeyFile(char *filename) {
 }
 
 char *readFile(char *filename){
-    printf("printf");
     int size = 100, pos = 0;
     char *filetext = malloc(sizeof(char) * size);
 
@@ -96,6 +95,37 @@ char *readFile(char *filename){
     return filetext;
 }
 
+// char **readFileToList(char *){
+//   printf("printf");
+//   int size = 100, pos = 0;
+//   char **words = malloc(sizeof(char*) * size);
+//
+//   if(filetext == NULL){
+//       printf("Error allocating memory for file contents");
+//       return NULL;
+//   }
+//
+//   FILE *thisFile = fopen(filename, "r");
+//   if (thisFile == NULL) {
+//       printf("Couldn't open file");
+//       return NULL;
+//   }
+//
+//   char c;
+//   int currentStringSize = 10;
+//   while (!feof(thisFile)) {
+//     char currentWord*;
+//     c = fscanf(thisFile, "%s", currentWord);
+//     char *currentWordMalloc = malloc(strlen(currentWord) + 1);
+//     memcpy(currentWordMalloc, currentWord);
+//   }
+//   // Add a break character so valgrind shuts up
+//   //filetext[pos++] = '\0';
+//
+//   fclose(thisFile);
+//   return words;
+// }
+
 void ReadKeyFiles(ArrayList *arrayList, char *keyFilesFolder){
   DIR *dir;
   struct dirent *ent;
@@ -115,7 +145,7 @@ void ReadKeyFiles(ArrayList *arrayList, char *keyFilesFolder){
           strncat(filename, "/\0", (sizeof(char) * 3));
           strncat(filename, ent->d_name, (sizeof(ent->d_name)) + 1);
           strncat(filename, "\0", (sizeof(char) * 1));
-          printf("filename:%s\n", filename);
+          // printf("filename:%s\n", filename);
 
           char *fileContents = readKeyFile(filename);
           addKeyFile(arrayList, filename, fileContents);
