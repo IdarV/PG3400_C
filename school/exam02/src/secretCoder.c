@@ -16,12 +16,7 @@ char *encode(char *keyFile, char *secretMessage, ErrorHandler *errors) {
 
 void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfile){
     int charIndex = 0;
-
-    // Just add a space if character is space
-    // Add a minus sign and search for lowcase of current number
-    // if(' ' == *c){
-    //   sprintf(currentString, "%c", *c);
-    // }
+    
     if (isHighCase(c)) {
         toLowCase(c);
         charIndex = findNextIndex(c, keyfile, lastIndex, d);

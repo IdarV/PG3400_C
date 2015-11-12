@@ -11,5 +11,6 @@ Dictionary *initDictionary();
 void addWordToDictionary(Dictionary *dictionary, char *word);
 void freeDictionary(Dictionary *dictionary);
 void fileToDictionary(Dictionary *dictionary, char *file);
+int wordExistsInDictionary(Dictionary *dictionary, char *word);
 
 #endif

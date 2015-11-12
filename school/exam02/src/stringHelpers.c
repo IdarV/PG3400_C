@@ -45,9 +45,10 @@ int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
             return index;
         }
 
+        // If current char is end-of-line, reset to start of string.
         else if('\0' == currentChar){
+            // (index will be incresed to 0 further down)
             index = -1;
-            //currentChar = key[index];
             looped = 1;
         }
 

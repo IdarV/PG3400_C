@@ -53,3 +53,13 @@ void fileToDictionary(Dictionary *dictionary, char *file){
     token = strtok(NULL, septs);
   }
 }
+
+int wordExistsInDictionary(Dictionary *dictionary, char *word){
+  for(int i = 0; i < dictionary->wordsListIndex; i++){
+    // printf("matching %s and %s\n", dictionary->wordsList[i], word);
+    if(strcmp(dictionary->wordsList[i], word) == 0){
+      return 1;
+    }
+  }
+  return 0;
+}

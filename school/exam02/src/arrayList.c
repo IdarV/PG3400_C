@@ -10,9 +10,13 @@ ArrayList *initCrackerArrayList(){
     arrayList->keyfilenames = malloc(5 * sizeof(char*));
     arrayList->keyfilesIndex = 0;
     arrayList->keyfiles = malloc(5 * sizeof(char*));
-    arrayList->score = 0;
+    arrayList->score = malloc(5 * sizeof(int));
 
     return arrayList;
+}
+
+void addScoreToCurrentKeyfile(ArrayList *arrayList, int score){
+  arrayList->score[arrayList->keyfilesIndex] = score;
 }
 
 void printAllNames(ArrayList *arrayList){
@@ -45,6 +49,7 @@ void arrayList_free(ArrayList *arrayList){
 
     free(arrayList->keyfilenames);
     free(arrayList->keyfiles);
+    free(arrayList->score);
     free(arrayList);
 }
 
@@ -55,5 +60,6 @@ void reAllocIfNecessary(ArrayList *arrayList){
     }
     if(((arrayList->keyfilesIndex + 1) * sizeof(char*))> sizeof(arrayList->keyfiles)){
         arrayList->keyfiles = realloc(arrayList->keyfiles, sizeof(arrayList->keyfiles) * arrayList->keyfilesIndex *  2);
+        arrayList->score = realloc(arrayList->score, sizeof(arrayList->score) * arrayList->keyfilesIndex * 2);
     }
 }

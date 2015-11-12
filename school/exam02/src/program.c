@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
   char *wordListFile = "/usr/share/dict/words";
   crack(encodedMessage, keyFilesFolder, wordListFile);
   printf("%s\n", encodedMessage);
+
+
   errorHandler_free(errorHandler);
   free(errorHandler);
   free(encodedMessage);

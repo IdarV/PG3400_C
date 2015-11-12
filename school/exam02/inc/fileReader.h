@@ -5,6 +5,6 @@
 
 char *readKeyFile(char *filename);
 char *readFile(char *filename);
-void ReadKeyFiles(ArrayList *arrayList, char *keyFilesFolder);
+void readKeyFiles(ArrayList *arrayList, char *keyFilesFolder);
 
 #endif

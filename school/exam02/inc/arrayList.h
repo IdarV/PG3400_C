@@ -2,7 +2,7 @@
 #define ARRAYLIST_H
 
 typedef struct{
-    int score;
+    int *score;
     char *bestmatch;
 
     int keyfilenamesIndex;
@@ -18,4 +18,5 @@ void printAll(ArrayList *arrayList);
 void addKeyFile(ArrayList *arrayList, char *keyFileName, char *keyFileContents);
 void reAllocIfNecessary(ArrayList *arrayList);
 void arrayList_free(ArrayList *arrayList);
+void addScoreToCurrentKeyfile(ArrayList *arrayList, int score);
 #endif

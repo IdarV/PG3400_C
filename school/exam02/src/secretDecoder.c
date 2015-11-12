@@ -34,9 +34,9 @@ int getNumber(char *secretMessage, int *index) {
 }
 
 // Decode secretMessage with Keyfile
-char *decode(char *keyFileName, char *secretMessage) {
+char *decode(char *keyFile, char *secretMessage) {
     // Read the keyFile
-    char *keyFile = readKeyFile(keyFileName);
+    //char *keyFile = readKeyFile(keyFileName);
     char *crackedMessage = malloc(strlen(secretMessage) / 3);
     int crackedMessageIndex = 0;
 
@@ -64,6 +64,6 @@ char *decode(char *keyFileName, char *secretMessage) {
 
     crackedMessage[crackedMessageIndex] = '\0';
 
-    free(keyFile);
+    //free(keyFile);
     return crackedMessage;
 }
