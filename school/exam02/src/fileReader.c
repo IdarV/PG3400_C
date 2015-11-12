@@ -3,8 +3,11 @@
 #include <stdbool.h>
 #include "stringHelpers.h"
 #include "fileReader.h"
+#include "arrayList.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
 
 FILE *file = NULL;
 
@@ -91,4 +94,33 @@ char *readFile(char *filename){
 
     fclose(thisFile);
     return filetext;
+}
+
+void ReadKeyFiles(ArrayList *arrayList, char *keyFilesFolder){
+  DIR *dir;
+  struct dirent *ent;
+
+  dir = opendir(keyFilesFolder);
+
+  if (NULL == dir) {
+      printf("ERROR: Could not open folder %s\n", keyFilesFolder);
+  } else{
+
+  while ((ent = readdir(dir)) != NULL) {
+//        printf ("%s\n", ent->d_name);
+      if (0 != strcmp(ent->d_name, "..") && 0 != strcmp(ent->d_name, ".")) {
+          char *filename = malloc(sizeof(char) * 100); //[100] = {'\0'};
+          //filename = "\0";
+          strncpy(filename, keyFilesFolder, strlen(keyFilesFolder) + 1);
+          strncat(filename, "/\0", (sizeof(char) * 3));
+          strncat(filename, ent->d_name, (sizeof(ent->d_name)) + 1);
+          strncat(filename, "\0", (sizeof(char) * 1));
+          printf("filename:%s\n", filename);
+
+          char *fileContents = readKeyFile(filename);
+          addKeyFile(arrayList, filename, fileContents);
+      }
+  }
+}
+  closedir(dir);
 }

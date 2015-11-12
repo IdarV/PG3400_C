@@ -19,6 +19,9 @@ void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfi
 
     // Just add a space if character is space
     // Add a minus sign and search for lowcase of current number
+    // if(' ' == *c){
+    //   sprintf(currentString, "%c", *c);
+    // }
     if (isHighCase(c)) {
         toLowCase(c);
         charIndex = findNextIndex(c, keyfile, lastIndex, d);
@@ -100,7 +103,7 @@ char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
         // Longest int64 is 19 characters + two brackets + minus sign + escape character = 23
         char currentString[50] = {};
         // If the charater is letter or a space
-        if (isLetter(&c)) {
+        if (isLetter(&c) || c == ' ') {
             getLetter(&c, currentString, &lastIndex, &d, keyfile);
             addLetter(currentString, encodedMessage, &firstSave);
         }
@@ -114,4 +117,3 @@ char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
 
     return encodedMessage;
 }
-

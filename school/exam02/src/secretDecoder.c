@@ -57,7 +57,6 @@ char *decode(char *keyFileName, char *secretMessage) {
                 crackedMessage[crackedMessageIndex++] = keyFile[number] - 32;
             }
         }
-
         else {
             crackedMessage[crackedMessageIndex++] = currentCrackedChar;
         }
