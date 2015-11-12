@@ -40,7 +40,8 @@ char *readKeyFile(char *filename) {
 
         if(pos >= size - 1){
             size *= 2;
-            filetext = realloc(filetext, size);
+            printf("%d\n", size);
+            filetext = realloc(filetext, sizeof(char) * size);
 
             if(filetext == NULL){
                 printf("Error incrementing memory for file conents");

@@ -47,18 +47,13 @@ int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
 
         else if('\0' == currentChar){
             index = -1;
-            currentChar = key[index];
+            //currentChar = key[index];
             looped = 1;
         }
 
         index++;
-//        printf("%d = %d ? \n", index, start);
 
     } while (start != index || looped == 0);
 
     return -1;
 }
-
-// char **stringToList(char *string){
-//
-// }

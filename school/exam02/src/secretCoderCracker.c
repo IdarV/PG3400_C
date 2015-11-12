@@ -15,28 +15,12 @@ char *crack(char *encodedMessage, char *keyFilesFolder, char *wordList) {
     crackerArrayList = initCrackerArrayList();
     dictionary = initDictionary();
     ReadKeyFiles(crackerArrayList,keyFilesFolder);
-    char *words = readFile("/usr/share/dict/words");
-    int wordsSize = strlen(words) + 1;
+    // fileToDictionary(dictionary, wordList);
+    addWordToDictionary(dictionary, keyFilesFolder);
 
-    char wordsCopy[wordsSize];
-    strncpy(wordsCopy, words, wordsSize);
-    free(words);
-    // printf("%s\n", wordsCopy);
-
-    char *token;
-    char septs[] = "\n";
-
-    token = strtok(wordsCopy, septs);
-    printf("dictionary size/capacity before adding: %d / %d\n", dictionary->wordsListIndex, dictionary->wordsListCapacity);
-
-    while(token != NULL){
-      // printf("%s\n", token);
-      addWordToDictionary(dictionary, token);
-      token = strtok(NULL, septs);
+    for(int i = 0; i < dictionary->wordsListIndex; i++){
+      // printf("%s\n", dictionary->wordsList[i]);
     }
-
-    printf("dictionary size/capacity after adding: %d / %d\n", dictionary->wordsListIndex, dictionary->wordsListCapacity);
-    printf("HOOo%s\n", dictionary->wordsList[0]);
 
 
 
