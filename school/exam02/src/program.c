@@ -14,6 +14,7 @@
 int main(int argc, char *argv[]) {
   ErrorHandler *errorHandler = initErrorHandler();
   char *filename = "../HE2/songLibrary/wakaWaka.txt";
+  // char *filename = "../HE2/songLibrary/fireWorkKatyPerry.txt";
   char *secretFile = "../secretMessage.txt";
 
   char *encodedMessage = encode(filename, secretFile, errorHandler);
@@ -21,13 +22,15 @@ int main(int argc, char *argv[]) {
 
   char *keyFilesFolder = "../HE2/songLibrary";
   char *wordListFile = "/usr/share/dict/words";
-  crack(encodedMessage, keyFilesFolder, wordListFile);
-  printf("%s\n", encodedMessage);
+  char *result = crack(encodedMessage, keyFilesFolder, wordListFile);
+  // printf("%s\n", encodedMessage);
+  printf("%s\n", result);
 
 
   errorHandler_free(errorHandler);
   free(errorHandler);
   free(encodedMessage);
+  free(result);
 
   //    char *wo = "keyFileName\0";
   // char *wordListFile = malloc(sizeof(char) * 80);
