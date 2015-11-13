@@ -1,7 +1,7 @@
 # show all warnings, compile with C11 standard, optimize the compiling with O2
 # cudos til Tomas som hjalp meg med makefiles
 
-CFLAGS=-Wall -g -std='c11'
+CFLAGS=-Wall -g -O3 -std='c11'
 INC=../inc
 CFILES=$(wildcard *.c)
 OBJECTS=$(CFILES:.c=.o)

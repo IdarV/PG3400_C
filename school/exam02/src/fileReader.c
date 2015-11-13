@@ -128,7 +128,7 @@ void readKeyFiles(ArrayList *arrayList, char *keyFilesFolder){
         // Add make filename [folder]/[filename]
         strncpy(filename, keyFilesFolder, strlen(keyFilesFolder) + 1);
         strncat(filename, "/\0", (sizeof(char) * 3));
-        strncat(filename, ent->d_name, (sizeof(ent->d_name)) + 1);
+        strncat(filename, ent->d_name, (strlen(ent->d_name)) + 1);
         strncat(filename, "\0", (sizeof(char) * 1));
 
         // Read keyfile contents
