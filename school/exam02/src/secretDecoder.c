@@ -5,65 +5,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Get the number in between two brackets
+// Get the number in between two brackets in an encoded message
 int getNumber(char *secretMessage, int *index) {
-    bool end = false;
-//    bool highCase = false;
-    int this_index = 1;
-    char number_arry[100] = {};
-    while (!end) {
-        char c = secretMessage[*index + this_index];
-        // End is we get to the end of this number
-        if (c == ']') {
-            end = true;
-        } else {
-            number_arry[this_index - 1] = c;
-            this_index++;
-        }
+  bool end = false;
+  int this_index = 1;
+  char number_arry[100] = {};
+
+  while (!end) {
+    char c = secretMessage[*index + this_index];
+
+    if (c == ']') {
+      // If char is end-square bracket, we are finished getting number
+      end = true;
+    } else {
+      // Add current char to array
+      number_arry[this_index - 1] = c;
+      this_index++;
     }
+  }
 
-    // Increase original index, so we'll get out of the brackets
-    *index = *index + this_index;
+  // Increase original index, so its outside of the brackets
+  *index += this_index;
 
-    // Parse number to int
-    int number_represented = -1;
-    sscanf(number_arry, "%d", &number_represented);
-
-    // Return number
-    return number_represented;
+  // Parse number to int, and return it
+  int number_represented = -1;
+  sscanf(number_arry, "%d", &number_represented);
+  return number_represented;
 }
 
 // Decode secretMessage with Keyfile
 char *decode(char *keyFile, char *secretMessage) {
-    // Read the keyFile
-    //char *keyFile = readKeyFile(keyFileName);
-    char *crackedMessage = malloc(strlen(secretMessage) / 3);
-    int crackedMessageIndex = 0;
+  // Allocate some space for cracked message
+  char *crackedMessage = malloc(strlen(secretMessage) / 3);
+  int crackedMessageIndex = 0;
 
-    // Get size of secret message
-    int secretMessageSize = strlen(secretMessage);
-    for (int i = 0; i < secretMessageSize - 1; i++) {
-        char currentCrackedChar = secretMessage[i];
-        // TODO: RETURN NULL IF NOT FOUND OR SOMETHING
+  // Get size of secret message
+  int secretMessageSize = strlen(secretMessage);
 
-        if (currentCrackedChar == '[') {
-            int number = getNumber(secretMessage, &i);
-            if (number >= 0) {
-                crackedMessage[crackedMessageIndex++] = keyFile[number];
-            } else {
-                // Make number positive
-                number *= -1;
-                // Print highcase(Unicode conv low->high = +32)
-                crackedMessage[crackedMessageIndex++] = keyFile[number] - 32;
-            }
-        }
-        else {
-            crackedMessage[crackedMessageIndex++] = currentCrackedChar;
-        }
+  // Loop through secret message
+  for (int i = 0; i < secretMessageSize - 1; i++) {
+    char currentCrackedChar = secretMessage[i];
+    // TODO: RETURN NULL IF NOT FOUND OR SOMETHING
+
+    // If we meet square brackets, get the number inside it and decode with
+    if (currentCrackedChar == '[') {
+      int number = getNumber(secretMessage, &i);
+      if (number >= 0) {
+        crackedMessage[crackedMessageIndex++] = keyFile[number];
+      }
+      else {
+        // If number is negative, it's an indication that it's ment to be
+        // high-case. Make number positive
+        number *= -1;
+        // add number as highcase (Unicode conv low->high = +32)
+        crackedMessage[crackedMessageIndex++] = keyFile[number] - 32;
+      }
     }
+    // If not a square bracket, its not encoded. Just add it
+    else {
+      crackedMessage[crackedMessageIndex++] = currentCrackedChar;
+    }
+  }
 
-    crackedMessage[crackedMessageIndex] = '\0';
+  // Add breack character at end
+  crackedMessage[crackedMessageIndex] = '\0';
 
-    //free(keyFile);
-    return crackedMessage;
+  return crackedMessage;
 }

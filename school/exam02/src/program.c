@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
   char *wordListFile = "/usr/share/dict/words";
   char *result = crack(encodedMessage, keyFilesFolder, wordListFile);
   // printf("%s\n", encodedMessage);
+  printf("%s\n", encodedMessage);
   printf("%s\n", result);
 
 

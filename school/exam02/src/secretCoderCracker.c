@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fileReader.h"
 #include <string.h>
 #include "arrayList.h"
+#include "fileReader.h"
 #include "secretDecoder.h"
 #include "dictionary.h"
 
@@ -46,7 +46,6 @@ char *crack(char *encodedMessage, char *keyFilesFolder, char *wordList) {
         highestScoreIndex = i;
       }
       addScoreToCurrentKeyfile(crackerArrayList, score);
-
 
     }
     printf("highestScore: %d, highestScoreIndex: %d\n", highestScore, highestScoreIndex);

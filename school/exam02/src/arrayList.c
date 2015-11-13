@@ -1,9 +1,9 @@
-#include "arrayList.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "arrayList.h"
 
+// Contains keyfile-names, keyfiles and
 ArrayList *initCrackerArrayList(){
-    //  int score; char *bestmatch;  char **keyfilenames; char **keyfiles;
     ArrayList *arrayList = malloc(sizeof(ArrayList));
 
     arrayList->keyfilenamesIndex = 0;

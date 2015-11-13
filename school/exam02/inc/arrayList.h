@@ -2,14 +2,14 @@
 #define ARRAYLIST_H
 
 typedef struct{
-    int *score;
-    char *bestmatch;
+  int *score;
+  char *bestmatch;
 
-    int keyfilenamesIndex;
-    char **keyfilenames;
+  int keyfilenamesIndex;
+  char **keyfilenames;
 
-    int keyfilesIndex;
-    char **keyfiles;
+  int keyfilesIndex;
+  char **keyfiles;
 } ArrayList;
 
 ArrayList *initCrackerArrayList();

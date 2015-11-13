@@ -1,6 +1,8 @@
 #include "stringHelpers.h"
 #include <stdlib.h>
-#include <stdio.h>
+
+/* CONTAINS STRING HELPERS */
+
 
 bool isInRange(int start, int end, int n) {
     for (int i = start; i <= end; i++) {
@@ -13,11 +15,9 @@ bool isInRange(int start, int end, int n) {
 
 // Check if the char ASCII is between [A-Za-z]
 bool isLetter(char *c){
-    //return (32 <= *c && 126 >= *c); // || (*c >= 'A' && *c <= 'Z'
     return (('A' <= *c && 'Z' >= *c) || ('a' <= *c && 'z' >= *c));
 }
 
-// If the char is lower than 90, its highcase
 bool isHighCase(char *c){
     return 'A' <= *c && 'Z' >= *c;
 }
@@ -27,7 +27,7 @@ void toLowCase(char *c){
     *c = *c + 32;
 }
 
-// d is distance
+// find next index with more than d distance from last index
 int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
     int start = *lastIndex;
     if(start == -1){
@@ -56,5 +56,6 @@ int findNextIndex(char *c, char *key, int *lastIndex, int *d) {
 
     } while (start != index || looped == 0);
 
+    // Return -1 of not found
     return -1;
 }
