@@ -48,8 +48,6 @@ char *crack(char *encodedMessage, char *keyFilesFolder, char *wordList) {
       addScoreToCurrentKeyfile(crackerArrayList, score);
 
     }
-    printf("highestScore: %d, highestScoreIndex: %d\n", highestScore, highestScoreIndex);
-    printf("file: %s\n", crackerArrayList->keyfilenames[highestScoreIndex]);
     char *result = malloc(sizeof(char) * 100);
     strncpy(result, "Most likely key file is ", sizeof(char) * 25);
     strncat(result, crackerArrayList->keyfilenames[highestScoreIndex], strlen(crackerArrayList->keyfilenames[highestScoreIndex]));
