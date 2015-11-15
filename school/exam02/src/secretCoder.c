@@ -57,7 +57,7 @@ void addLetter(char *stringToAdd, char *encodedMessage, int *firstSave) {
             char *dest = strncat(encodedMessage, stringToAdd, (strlen(stringToAdd)) + 1);
 
             if (dest == NULL) {
-                // TODO: handle this
+                *globStatus = 1;
             }
         }
     }
