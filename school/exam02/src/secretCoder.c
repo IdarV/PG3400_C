@@ -5,24 +5,23 @@
 #include "stringHelpers.h"
 #include "secretCoder.h"
 #include "fileReader.h"
-#include "errorHandler.h"
 
-static ErrorHandler *errorHandler;
+int *globStatus;
 
-char *encode(char *keyFile, char *secretMessage, ErrorHandler *errors) {
-    errorHandler = errors;
+char *encode(char *keyFile, char *secretMessage, int *status) {
+    globStatus = status;
     return encodeWithDistance(keyFile, secretMessage, 2);
 }
 
-void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfile){
+void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfile) {
     int charIndex = 0;
 
     if (isHighCase(c)) {
         toLowCase(c);
         charIndex = findNextIndex(c, keyfile, lastIndex, d);
         // If charIndex is -1, it wasnt found. Add error and dont encode it
-        if(-1 == charIndex){
-            errorHandler->errors[0] = 1;
+        if (-1 == charIndex) {
+            *globStatus = 1;
             sprintf(currentString, "%c", *c);
         }
         else {
@@ -32,11 +31,11 @@ void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfi
         // Print next lowcase of current number
     else {
         charIndex = findNextIndex(c, keyfile, lastIndex, d);
-        if(-1 == charIndex){
-            errorHandler->errors[0] = 1;
+        if (-1 == charIndex) {
+            *globStatus = 1;
             sprintf(currentString, "%c", *c);
         }
-        else{
+        else {
             sprintf(currentString, "[%d]", charIndex);
         }
     }
@@ -45,7 +44,7 @@ void getLetter(char *c, char *currentString, int *lastIndex, int *d, char *keyfi
     *lastIndex = charIndex;
 }
 
-void addLetter(char *stringToAdd, char *encodedMessage, int *firstSave){
+void addLetter(char *stringToAdd, char *encodedMessage, int *firstSave) {
     if (stringToAdd != NULL) {
         if (firstSave == 0) {
             // If the string is not yet put into memory, it had no escape character to look for. Therefore,
@@ -58,7 +57,7 @@ void addLetter(char *stringToAdd, char *encodedMessage, int *firstSave){
             char *dest = strncat(encodedMessage, stringToAdd, (strlen(stringToAdd)) + 1);
 
             if (dest == NULL) {
-                errorHandler->errors[1] = 1;
+                // TODO: handle this
             }
         }
     }
@@ -99,14 +98,12 @@ char *encodeWithDistance(char *keyFileName, char *secretFileName, int d) {
     do {
         // Holds current string to put in encodedMessage
         char currentString[50] = {};
-        // If the charater is letter or a space
-        if (isLetter(&c) || c == ' ') {
-            getLetter(&c, currentString, &lastIndex, &d, keyfile);
-            addLetter(currentString, encodedMessage, &firstSave);
-        }
+        // If the character is letter or a space
+        getLetter(&c, currentString, &lastIndex, &d, keyfile);
+        addLetter(currentString, encodedMessage, &firstSave);
 
         c = secretfile[index++];
-    } while(c != '\0'); // While we haven't read the break character
+    } while (c != '\0' && c != EOF); // While we haven't read the break character
 
     // free files we don't need anymore
     free(keyfile);

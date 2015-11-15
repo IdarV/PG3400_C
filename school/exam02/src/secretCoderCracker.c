@@ -49,8 +49,7 @@ char *crack(char *encodedMessage, char *keyFilesFolder, char *wordList) {
 
     }
     char *result = malloc(sizeof(char) * 100);
-    strncpy(result, "Most likely key file is ", sizeof(char) * 25);
-    strncat(result, crackerArrayList->keyfilenames[highestScoreIndex], strlen(crackerArrayList->keyfilenames[highestScoreIndex]));
+    strncpy(result, crackerArrayList->keyfilenames[highestScoreIndex], strlen(crackerArrayList->keyfilenames[highestScoreIndex]) + 1);
 
     freeDictionary(dictionary);
     arrayList_free(crackerArrayList);
