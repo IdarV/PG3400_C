@@ -6,10 +6,16 @@ INC=../inc
 CFILES=$(wildcard *.c)
 OBJECTS=$(CFILES:.c=.o)
 
+OUTPUTLIB=libsecretCoder.a
+
 .c.o:
 	gcc $(CFLAGS) -I$(INC) -c $<
 
-all: program
+all: $(OUTPUTLIB)
+
+$(OUTPUTLIB):	$(OBJECTS)
+	ar rvu $@ $^
+	ranlib $@
 
 program: $(OBJECTS)
 	gcc $(CFLAGS) -I$(INC) $^ -o $@
@@ -17,3 +23,4 @@ program: $(OBJECTS)
 clean:
 	rm -f program
 	rm -f *.o
+
